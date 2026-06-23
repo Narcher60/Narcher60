@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mentions Légales — Fidpass</title>
+  <meta name="description" content="Mentions légales de Fidpass, la carte de fidélité digitale pour vos clients." />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+
+    /* ─── Design Tokens ─────────────────────────────────── */
+    :root {
+      --bg:      #000;
+      --bg1:     #0a0a0a;
+      --bg2:     #111;
+      --border:  rgba(255,255,255,.07);
+      --border2: rgba(255,255,255,.12);
+      --white:   #fff;
+      --dim:     rgba(255,255,255,.55);
+      --muted:   rgba(255,255,255,.32);
+      --green:   #22c55e;
+      --green2:  #16a34a;
+
+      --nav-h:   72px;
+      --radius:  16px;
+      --radius-sm: 10px;
+      --transition: 200ms ease;
+    }
+
+    /* ─── Reset ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      padding-top: calc(var(--nav-h) + 24px);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── Noise Texture ─────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: .35;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 300px 300px;
+    }
+
+    /* ─── Scroll Reveal ─────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ─── Layout Helpers ────────────────────────────────── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       NAV — floating pill
+    ════════════════════════════════════════════════════════ */
+    .nav {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      width: calc(100% - 32px);
+      max-width: 1100px;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: rgba(10,10,10,.82);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--border2);
+      border-radius: 9999px;
+      padding: 10px 16px 10px 20px;
+      height: var(--nav-h);
+    }
+
+    /* Logo */
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav-logo-icon {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+    }
+    .nav-logo-icon span {
+      display: block;
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 2px;
+    }
+    .nav-logo-text {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -.3px;
+    }
+
+    /* Nav links */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--dim);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 7px 12px;
+      border-radius: 9999px;
+      transition: color var(--transition), background var(--transition);
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      color: var(--white);
+      background: rgba(255,255,255,.06);
+    }
+
+    /* Nav CTAs */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .btn-ghost {
+      color: var(--dim);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 9999px;
+      border: 1px solid var(--border2);
+      background: transparent;
+      cursor: pointer;
+      transition: color var(--transition), border-color var(--transition), background var(--transition);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-ghost:hover {
+      color: var(--white);
+      border-color: rgba(255,255,255,.25);
+      background: rgba(255,255,255,.05);
+    }
+    .btn-green {
+      color: #000;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      background: var(--green);
+      border: none;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-green:hover {
+      background: var(--green2);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .btn-green:hover { transform: translateY(-1px); }
+    }
+
+    /* Hide nav links on small screens */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .btn-ghost { display: none; }
+    }
+    @media (max-width: 480px) {
+      .nav-inner { padding: 8px 12px 8px 16px; }
+    }
+
+    /* ════════════════════════════════════════════════════════
+       PAGE HEADER
+    ════════════════════════════════════════════════════════ */
+    .page-header {
+      padding: 56px 0 48px;
+      text-align: center;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 32px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      transition: color var(--transition), border-color var(--transition), background var(--transition);
+      cursor: pointer;
+    }
+    .back-link:hover {
+      color: var(--dim);
+      border-color: var(--border2);
+      background: rgba(255,255,255,.06);
+    }
+    .back-link svg {
+      flex-shrink: 0;
+    }
+
+    .page-eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 16px;
+    }
+
+    .page-title {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -.03em;
+      color: var(--white);
+      margin-bottom: 12px;
+      position: relative;
+      display: inline-block;
+    }
+    .page-title-underline {
+      display: block;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green), transparent);
+      border-radius: 9999px;
+      margin-top: 6px;
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .page-subtitle {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       LEGAL CARDS
+    ════════════════════════════════════════════════════════ */
+    .legal-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-bottom: 96px;
+    }
+
+    .legal-card {
+      background: var(--bg1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 36px;
+      transition: border-color var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .legal-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(34,197,94,.18), transparent);
+      pointer-events: none;
+    }
+    .legal-card:hover {
+      border-color: var(--border2);
+    }
+
+    .legal-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .legal-card-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(34,197,94,.1);
+      border: 1px solid rgba(34,197,94,.2);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--green);
+    }
+
+    .legal-card-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: -.01em;
+    }
+
+    .legal-card-body {
+      color: var(--dim);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .legal-card-body p { margin-bottom: 8px; }
+    .legal-card-body p:last-child { margin-bottom: 0; }
+
+    /* Key-value rows */
+    .kv-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      list-style: none;
+    }
+    .kv-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .kv-key {
+      font-weight: 600;
+      color: rgba(255,255,255,.7);
+      white-space: nowrap;
+      min-width: 140px;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .kv-val {
+      color: var(--dim);
+      font-size: 15px;
+    }
+    .kv-val a {
+      color: var(--green);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color var(--transition);
+    }
+    .kv-val a:hover {
+      color: #4ade80;
+    }
+
+    .placeholder {
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* Internal link styled */
+    .legal-link {
+      color: var(--green);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 500;
+      transition: color var(--transition);
+    }
+    .legal-link:hover { color: #4ade80; }
+
+    @media (max-width: 600px) {
+      .legal-card { padding: 24px 20px; }
+      .kv-key { min-width: 110px; }
+    }
+
+    /* ════════════════════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════════════════════ */
+    .footer {
+      background: var(--bg1);
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 72px 24px 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 40px 32px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Col 1 Brand */
+    .footer-brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 16px;
+      text-decoration: none;
+    }
+    .footer-brand-logo-icon {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+    }
+    .footer-brand-logo-icon span {
+      display: block;
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 2px;
+    }
+    .footer-brand-logo-text {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -.3px;
+    }
+
+    .footer-tagline {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 220px;
+      margin-bottom: 24px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 10px;
+    }
+    .footer-social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      border: 1px solid var(--border2);
+      background: rgba(255,255,255,.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      transition: color var(--transition), border-color var(--transition), background var(--transition);
+      cursor: pointer;
+    }
+    .footer-social-btn:hover {
+      color: var(--white);
+      border-color: rgba(255,255,255,.22);
+      background: rgba(255,255,255,.08);
+    }
+
+    /* Footer columns */
+    .footer-col-title {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 18px;
+    }
+
+    .footer-col-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-col-links a {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 400;
+      transition: color var(--transition);
+      display: inline-block;
+      cursor: pointer;
+    }
+    .footer-col-links a:hover {
+      color: var(--dim);
+    }
+    .footer-col-links a.active {
+      color: var(--green);
+    }
+
+    /* Footer bottom */
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 24px 0;
+      flex-wrap: wrap;
+    }
+    .footer-bottom-copy {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .footer-bottom-contact a {
+      color: var(--muted);
+      font-size: 13px;
+      transition: color var(--transition);
+    }
+    .footer-bottom-contact a:hover {
+      color: var(--dim);
+    }
+
+    @media (max-width: 960px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 36px 24px;
+      }
+      .footer-col-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 560px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .footer-col-brand { grid-column: 1 / -1; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════
+       NAV
+  ══════════════════════════════════════════════════════ -->
+  <nav class="nav" role="navigation" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <!-- Logo -->
+      <a href="/" class="nav-logo" aria-label="Fidpass — accueil">
+        <div class="nav-logo-icon" aria-hidden="true">
+          <span></span><span></span>
+          <span></span><span></span>
+        </div>
+        <span class="nav-logo-text">Fidpass</span>
+      </a>
+
+      <!-- Links -->
+      <ul class="nav-links" role="list">
+        <li><a href="/#features">Fonctionnalités</a></li>
+        <li><a href="/#how">Comment ça marche</a></li>
+        <li><a href="/#roulette">Roulette Avis</a></li>
+        <li><a href="/#tarifs">Tarifs</a></li>
+        <li><a href="/#faq">FAQ</a></li>
+      </ul>
+
+      <!-- Actions -->
+      <div class="nav-actions">
+        <a href="https://app.fidpass.fr" class="btn-ghost">Se connecter</a>
+        <a href="https://app.fidpass.fr/register" class="btn-green">Démo gratuite →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════
+       MAIN
+  ══════════════════════════════════════════════════════ -->
+  <main>
+    <div class="container">
+
+      <!-- Page Header -->
+      <header class="page-header reveal">
+        <div>
+          <a href="/" class="back-link" aria-label="Retour à l'accueil">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M8.5 2.5L4 7l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Retour à l'accueil
+          </a>
+        </div>
+
+        <span class="page-eyebrow">Fidpass · Légal</span>
+        <div>
+          <h1 class="page-title">
+            Mentions Légales
+            <span class="page-title-underline" aria-hidden="true"></span>
+          </h1>
+        </div>
+        <p class="page-subtitle">Dernière mise à jour : juin 2025</p>
+      </header>
+
+      <!-- Legal Sections -->
+      <div class="legal-grid">
+
+        <!-- Éditeur du site -->
+        <article class="legal-card reveal">
+          <div class="legal-card-header">
+            <div class="legal-card-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+              </svg>
+            </div>
+            <h2 class="legal-card-title">Éditeur du site</h2>
+          </div>
+          <div class="legal-card-body">
+            <ul class="kv-list">
+              <li class="kv-row">
+                <span class="kv-key">Nom</span>
+                <span class="kv-val">Yacine Laroud</span>
+              </li>
+              <li class="kv-row">
+                <span class="kv-key">Statut</span>
+                <span class="kv-val">Entrepreneur individuel</span>
+              </li>
+              <li class="kv-row">
+                <span class="kv-key">SIREN</span>
+                <span class="kv-val">810&nbsp;186&nbsp;106</span>
+              </li>
+              <li class="kv-row">
+                <span class="kv-key">Adresse</span>
+                <span class="kv-val placeholder">[À compléter]</span>
+              </li>
+              <li class="kv-row">
+                <span class="kv-key">Email</span>
+                <span class="kv-val"><a href="mailto:contact@fidpass.fr">contact@fidpass.fr</a></span>
+              </li>
+              <li class="kv-row">
+                <span class="kv-key">Site web</span>
+                <span class="kv-val"><a href="https://fidpass.fr" target="_blank" rel="noopener noreferrer">https://fidpass.fr</a></span>
+              </li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Directeur de la publication -->
+        <article class="legal-card reveal">
+          <div class="legal-card-header">
+            <div class="legal-card-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+            </div>
+            <h2 class="legal-card-title">Directeur de la publication</h2>
+          </div>
+          <div class="legal-card-body">
+            <p>Yacine Laroud</p>
+          </div>
+        </article>
+
+        <!-- Hébergement -->
+        <article class="legal-card reveal">
+          <div class="legal-card-header">
+            <div class="legal-card-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
+              </svg>
+            </div>
+            <h2 class="legal-card-title">Hébergement</h2>
+          </div>
+          <div class="legal-card-body">
+            <p class="placeholder">[À compléter selon hébergeur]</p>
+          </div>
+        </article>
+
+        <!-- Propriété intellectuelle -->
+        <article class="legal-card reveal">
+          <div class="legal-card-header">
+            <div class="legal-card-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2l8 3.5v5.5C20 16.4 16.4 21 12 22 7.6 21 4 16.4 4 11V5.5L12 2z"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+            </div>
+            <h2 class="legal-card-title">Propriété intellectuelle</h2>
+          </div>
+          <div class="legal-card-body">
+            <p>Le site fidpass.fr et son contenu (textes, images, logos, code) sont protégés par le droit de la propriété intellectuelle. Toute reproduction sans autorisation est interdite.</p>
+          </div>
+        </article>
+
+        <!-- Données personnelles -->
+        <article class="legal-card reveal">
+          <div class="legal-card-header">
+            <div class="legal-card-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="11" width="14" height="11" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/><circle cx="12" cy="16" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </div>
+            <h2 class="legal-card-title">Données personnelles</h2>
+          </div>
+          <div class="legal-card-body">
+            <p>Voir notre <a href="./confidentialite.html" class="legal-link">Politique de confidentialité</a>.</p>
+          </div>
+        </article>
+
+        <!-- Cookies -->
+        <article class="legal-card reveal">
+          <div class="legal-card-header">
+            <div class="legal-card-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="8" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+                <circle cx="15" cy="14" r="1.2" fill="currentColor" stroke="none"/>
+                <circle cx="10.5" cy="15.5" r=".8" fill="currentColor" stroke="none"/>
+                <path d="M12 2a10 10 0 0 1 2 .2"/>
+              </svg>
+            </div>
+            <h2 class="legal-card-title">Cookies</h2>
+          </div>
+          <div class="legal-card-body">
+            <p>Ce site utilise des cookies fonctionnels et de mesure d'audience. Vous pouvez les gérer via les paramètres de votre navigateur. La navigation reste possible sans cookies.</p>
+          </div>
+        </article>
+
+        <!-- Droit applicable -->
+        <article class="legal-card reveal">
+          <div class="legal-card-header">
+            <div class="legal-card-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22V2"/><path d="M2 12l10-4 10 4"/><path d="M6 12v5a6 6 0 0 0 12 0v-5"/>
+              </svg>
+            </div>
+            <h2 class="legal-card-title">Droit applicable</h2>
+          </div>
+          <div class="legal-card-body">
+            <p>Droit français. Tribunal compétent : tribunaux français.</p>
+          </div>
+        </article>
+
+      </div><!-- /legal-grid -->
+    </div><!-- /container -->
+  </main>
+
+  <!-- ══════════════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-grid">
+
+        <!-- Col 1: Brand -->
+        <div class="footer-col-brand">
+          <a href="/" class="footer-brand-logo" aria-label="Fidpass — accueil">
+            <div class="footer-brand-logo-icon" aria-hidden="true">
+              <span></span><span></span>
+              <span></span><span></span>
+            </div>
+            <span class="footer-brand-logo-text">Fidpass</span>
+          </a>
+          <p class="footer-tagline">La carte de fidélité digitale qui fait revenir vos clients.</p>
+          <div class="footer-socials" role="list" aria-label="Réseaux sociaux">
+            <!-- Instagram -->
+            <a href="https://instagram.com/fidpass" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Fidpass sur Instagram" role="listitem">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                <circle cx="12" cy="12" r="5"/>
+                <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            <!-- TikTok -->
+            <a href="https://tiktok.com/@fidpass" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Fidpass sur TikTok" role="listitem">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.05a8.16 8.16 0 0 0 4.77 1.52V7.12a4.85 4.85 0 0 1-1-.43z"/>
+              </svg>
+            </a>
+            <!-- Email -->
+            <a href="mailto:contact@fidpass.fr" class="footer-social-btn" aria-label="Envoyer un email à Fidpass" role="listitem">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="M2 7l10 7 10-7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Produit -->
+        <div>
+          <p class="footer-col-title">Produit</p>
+          <ul class="footer-col-links" role="list">
+            <li><a href="/#features">Fonctionnalités</a></li>
+            <li><a href="/#how">Comment ça marche</a></li>
+            <li><a href="/#roulette">Roulette Avis</a></li>
+            <li><a href="/#tarifs">Tarifs</a></li>
+            <li><a href="/#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Solutions -->
+        <div>
+          <p class="footer-col-title">Solutions</p>
+          <ul class="footer-col-links" role="list">
+            <li><a href="/#solutions">Boulangeries</a></li>
+            <li><a href="/#solutions">Restaurants</a></li>
+            <li><a href="/#solutions">Salons</a></li>
+            <li><a href="/#solutions">Boutiques</a></li>
+            <li><a href="/#solutions">Bien-être</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Agence -->
+        <div>
+          <p class="footer-col-title">Agence</p>
+          <ul class="footer-col-links" role="list">
+            <li><a href="/#about">À propos</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/#contact">Contact</a></li>
+            <li><a href="/#partenaires">Partenaires</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 5: Légal -->
+        <div>
+          <p class="footer-col-title">Légal</p>
+          <ul class="footer-col-links" role="list">
+            <li><a href="./mentions-legales.html" class="active" aria-current="page">Mentions légales</a></li>
+            <li><a href="./cgv.html">CGV</a></li>
+            <li><a href="./confidentialite.html">Confidentialité</a></li>
+          </ul>
+        </div>
+
+      </div><!-- /footer-grid -->
+
+      <div class="footer-bottom">
+        <p class="footer-bottom-copy">© 2025 Fidpass · Pensé, conçu et opéré en France 🇫🇷</p>
+        <div class="footer-bottom-contact">
+          <a href="mailto:contact@fidpass.fr">contact@fidpass.fr</a>
+        </div>
+      </div>
+    </div><!-- /footer-inner -->
+  </footer>
+
+  <!-- ══════════════════════════════════════════════════════
+       SCROLL REVEAL — IntersectionObserver
+  ══════════════════════════════════════════════════════ -->
+  <script>
+    (function () {
+      // Respect prefers-reduced-motion: elements already visible via CSS fallback
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced) return;
+
+      var targets = document.querySelectorAll('.reveal');
+
+      if (!('IntersectionObserver' in window)) {
+        targets.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var el = entry.target;
+            var delay = parseInt(el.dataset.revealDelay || '0', 10);
+            setTimeout(function () {
+              el.classList.add('visible');
+            }, delay);
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+      targets.forEach(function (el, i) {
+        el.dataset.revealDelay = String(i * 65);
+        observer.observe(el);
+      });
+    })();
+  </script>
+
+</body>
+</html>
