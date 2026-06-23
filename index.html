@@ -3,270 +3,338 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fidpass — La fidélité qui fait revenir</title>
-<meta name="description" content="Carte de fidélité digitale dans Apple & Google Wallet en 2 clics. Roulette Google Avis intégrée. Zéro appli. Vos clients fidélisés en 24h.">
+<title>Fidpass — La fidélité digitale qui fait revenir vos clients</title>
+<meta name="description" content="Carte de fidélité digitale dans Apple & Google Wallet en 2 clics. Push illimités, Roulette Google Avis, zéro appli. Dès 79,90€/mois.">
+<link rel="icon" type="image/x-icon" href="https://fidpass.fr/favicon-96x96-1.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#000;--bg1:#0a0a0a;--bg2:#111;--bg3:#161616;--bg4:#1e1e1e;
-  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.12);
-  --white:#fff;--dim:rgba(255,255,255,.55);--muted:rgba(255,255,255,.32);--faint:rgba(255,255,255,.1);
-  --green:#22c55e;--green2:#16a34a;--green-glow:rgba(34,197,94,.18);
-  --r:20px;--r-sm:14px;--r-xs:10px;
+  --bg:#000;--bg1:#050505;--bg2:#0a0a0a;--bg3:#0f0f0f;--bg4:#141414;
+  --glass:rgba(255,255,255,.04);--glass2:rgba(255,255,255,.07);
+  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.13);--border3:rgba(255,255,255,.2);
+  --white:#fff;--dim:rgba(255,255,255,.6);--muted:rgba(255,255,255,.35);--faint:rgba(255,255,255,.08);
+  --green:#22c55e;--green2:#16a34a;--green3:#15803d;--green-glow:rgba(34,197,94,.22);
+  --green-glass:rgba(34,197,94,.06);--green-border:rgba(34,197,94,.22);
+  --r:18px;--r-lg:28px;--r-sm:12px;
 }
 html{scroll-behavior:smooth;color-scheme:dark}
 body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--white);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px}
-#cursor-light{position:fixed;width:500px;height:500px;border-radius:50%;pointer-events:none;z-index:1;opacity:0;transition:opacity .8s;background:radial-gradient(circle,rgba(34,197,94,.065) 0%,transparent 70%);transform:translate(-50%,-50%)}
-.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
-.tag{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:7px 16px;border-radius:50px;border:1px solid var(--border2);color:var(--muted);background:rgba(255,255,255,.03);backdrop-filter:blur(10px)}
-.tag-green{border-color:rgba(34,197,94,.25);color:var(--green);background:rgba(34,197,94,.07)}
-.tag-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:pdot 2s ease-in-out infinite}
-@keyframes pdot{0%,100%{opacity:1}50%{opacity:.4}}
-.btn{display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;font-weight:700;border-radius:50px;text-decoration:none;border:none;cursor:pointer;transition:all .2s;white-space:nowrap}
-.btn-primary{background:var(--green);color:#000;font-size:15px;padding:14px 30px}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(34,197,94,.38),0 0 0 4px rgba(34,197,94,.12)}
-.btn-secondary{background:rgba(255,255,255,.06);color:var(--white);font-size:15px;padding:14px 30px;border:1px solid var(--border2);backdrop-filter:blur(10px)}
-.btn-secondary:hover{border-color:rgba(255,255,255,.25);transform:translateY(-1px)}
-.btn-lg{font-size:17px;padding:16px 36px}
-.btn-sm{font-size:13px;padding:10px 22px}
-section{padding:100px 0;position:relative}
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+
+/* Noise overlay */
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.025;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px}
+
+/* Cursor spotlight */
+#clight{position:fixed;width:600px;height:600px;border-radius:50%;pointer-events:none;z-index:1;opacity:0;transition:opacity 1s;
+background:radial-gradient(circle,rgba(34,197,94,.055) 0%,transparent 70%);transform:translate(-50%,-50%)}
+
+/* Layout */
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+
+/* Liquid glass card mixin */
+.glass{background:var(--glass);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--border2);border-radius:var(--r-lg)}
+.glass-green{background:var(--green-glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--green-border);border-radius:var(--r-lg)}
+
+/* Tags */
+.tag{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:7px 16px;border-radius:50px;border:1px solid var(--border2);color:var(--muted);backdrop-filter:blur(10px)}
+.tag-g{border-color:var(--green-border);color:var(--green);background:var(--green-glass)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pdot 2.2s ease-in-out infinite}
+@keyframes pdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;font-weight:700;border-radius:50px;text-decoration:none;border:none;cursor:pointer;transition:all .22s;white-space:nowrap}
+.btn-p{background:var(--green);color:#000;font-size:15px;padding:14px 30px}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 10px 40px rgba(34,197,94,.4),0 0 0 4px rgba(34,197,94,.12)}
+.btn-g{background:var(--glass);color:var(--white);font-size:15px;padding:14px 30px;border:1px solid var(--border2);backdrop-filter:blur(12px)}
+.btn-g:hover{border-color:var(--border3);background:var(--glass2);transform:translateY(-1px)}
+.btn-lg{font-size:17px;padding:16px 38px}
+.btn-sm{font-size:13px;padding:9px 20px}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1)}
 .reveal.up{opacity:1;transform:none}
-.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
-.sec-title{font-size:clamp(32px,5vw,58px);font-weight:900;letter-spacing:-0.05em;line-height:1.04;color:var(--white)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* Section */
+section{padding:110px 0;position:relative}
+.sec-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:18px}
+.sec-title{font-size:clamp(34px,5.5vw,64px);font-weight:900;letter-spacing:-0.055em;line-height:1.02}
 .tc{text-align:center}
-/* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100}
-.nav-inner{max-width:1120px;margin:16px auto 0;padding:0 28px}
-.nav-pill{display:flex;align-items:center;justify-content:space-between;background:rgba(8,8,8,.8);backdrop-filter:blur(24px);border:1px solid var(--border2);border-radius:50px;padding:10px 10px 10px 24px;gap:16px;transition:background .3s,border-color .3s}
-.nav-pill.scrolled{background:rgba(4,4,4,.96);border-color:rgba(255,255,255,.1)}
-.logo{font-size:17px;font-weight:800;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:9px;letter-spacing:-0.02em}
-.logo-mark{width:30px;height:30px;background:var(--green);border-radius:9px;display:grid;place-items:center;flex-shrink:0}
-.logo-mark svg{width:15px;height:15px;fill:#000}
-.nav-links{display:flex;gap:4px;list-style:none}
+
+/* ─── NAV ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200}
+.nav-inner{max-width:1160px;margin:14px auto 0;padding:0 22px}
+.nav-pill{display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,5,.75);backdrop-filter:blur(28px) saturate(200%);-webkit-backdrop-filter:blur(28px) saturate(200%);border:1px solid var(--border2);border-radius:50px;padding:9px 9px 9px 22px;gap:14px;transition:all .3s}
+.nav-pill.sc{background:rgba(2,2,2,.92);border-color:rgba(255,255,255,.09)}
+.logo{font-size:17px;font-weight:800;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:9px;letter-spacing:-0.025em;flex-shrink:0}
+.logo-icon{width:32px;height:32px;background:var(--green);border-radius:10px;display:grid;place-items:center}
+.logo-icon svg{width:16px;height:16px;fill:#000}
+.nav-links{display:flex;gap:2px;list-style:none}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:6px 14px;border-radius:50px;transition:all .2s}
-.nav-links a:hover{color:var(--white);background:rgba(255,255,255,.06)}
-@media(max-width:768px){.nav-links{display:none}}
-/* ── HERO ── */
-.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 28px 80px;text-align:center;overflow:hidden;position:relative}
-.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
-.hero-glow{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none}
-.g1{width:800px;height:800px;background:radial-gradient(circle,rgba(34,197,94,.11),transparent 70%);top:-250px;left:50%;transform:translateX(-50%);animation:ga 14s ease-in-out infinite}
-.g2{width:400px;height:400px;background:radial-gradient(circle,rgba(34,197,94,.07),transparent 70%);bottom:0;left:-80px;animation:gb 18s ease-in-out infinite}
-.g3{width:350px;height:350px;background:radial-gradient(circle,rgba(34,197,94,.08),transparent 70%);top:30%;right:-60px;animation:gc 12s ease-in-out infinite}
-@keyframes ga{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(50px)}}
-@keyframes gb{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-40px)}}
-@keyframes gc{0%,100%{transform:translate(0,0)}50%{transform:translate(-25px,30px)}}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:70px 70px;mask-image:radial-gradient(ellipse 80% 70% at 50% 0%,black 20%,transparent 80%)}
-.hero-content{position:relative;z-index:2;max-width:820px}
-.hero h1{font-size:clamp(44px,8vw,96px);font-weight:900;letter-spacing:-0.055em;line-height:.97;margin:22px 0;color:var(--white)}
-.hero h1 .grad{background:linear-gradient(130deg,var(--green),#86efac 50%,var(--green));background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gs 4s ease infinite}
+.nav-links a:hover{color:var(--white);background:rgba(255,255,255,.05)}
+.nav-right{display:flex;align-items:center;gap:8px}
+@media(max-width:820px){.nav-links{display:none}}
+@media(max-width:480px){.nav-pill{padding:8px 8px 8px 18px}}
+
+/* ─── HERO ─── */
+.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:130px 28px 80px;text-align:center;overflow:hidden;position:relative}
+.hero-orbs{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.orb{position:absolute;border-radius:50%;filter:blur(90px)}
+.o1{width:900px;height:900px;background:radial-gradient(circle,rgba(34,197,94,.1),transparent 65%);top:-300px;left:50%;transform:translateX(-50%);animation:o1a 16s ease-in-out infinite}
+.o2{width:500px;height:500px;background:radial-gradient(circle,rgba(34,197,94,.07),transparent 65%);bottom:-100px;left:-150px;animation:o2a 20s ease-in-out infinite}
+.o3{width:400px;height:400px;background:radial-gradient(circle,rgba(74,222,128,.06),transparent 65%);top:25%;right:-100px;animation:o3a 13s ease-in-out infinite}
+@keyframes o1a{0%,100%{transform:translateX(-50%) translateY(0) scale(1)}50%{transform:translateX(-48%) translateY(60px) scale(1.06)}}
+@keyframes o2a{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,-60px)}}
+@keyframes o3a{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,40px)}}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 80% 65% at 50% 0%,black 20%,transparent 80%);pointer-events:none}
+.hero-content{position:relative;z-index:2;max-width:880px}
+.hero h1{font-size:clamp(46px,8.5vw,106px);font-weight:900;letter-spacing:-0.06em;line-height:.93;margin:24px 0 28px}
+.grad{background:linear-gradient(135deg,#22c55e 0%,#86efac 45%,#22c55e 100%);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gs 4s ease infinite}
 @keyframes gs{0%{background-position:0%}50%{background-position:100%}100%{background-position:0%}}
-.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--dim);max-width:560px;margin:0 auto 36px;line-height:1.7;font-weight:400}
-.hero-ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:14px}
-.hero-note{font-size:13px;color:var(--muted)}
+.hero-sub{font-size:clamp(16px,2.2vw,21px);color:var(--dim);max-width:600px;margin:0 auto 36px;line-height:1.7;font-weight:400}
+.hero-note{font-size:13px;color:var(--muted);margin-top:12px}
 .hero-note a{color:var(--dim);text-decoration:underline;text-underline-offset:3px}
-.hero-cards{position:relative;z-index:2;margin-top:72px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
-.hcard{background:rgba(255,255,255,.04);backdrop-filter:blur(20px);border:1px solid var(--border2);border-radius:var(--r);padding:22px;text-align:left;transition:transform .3s,box-shadow .3s,border-color .3s}
-.hcard:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,.5),0 0 0 1px rgba(34,197,94,.15);border-color:rgba(34,197,94,.2)}
-.hcard .n{font-size:40px;font-weight:900;letter-spacing:-0.05em;color:var(--white)}
-.hcard .n em{color:var(--green);font-style:normal}
-.hcard .l{font-size:12px;color:var(--muted);margin-top:2px}
-.hcard-wallet{min-width:230px}
-.w-top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.w-av{width:34px;height:34px;background:var(--green2);border-radius:9px;display:grid;place-items:center;font-size:12px;font-weight:900;color:#000;flex-shrink:0}
-.w-name{font-size:13px;font-weight:700}
-.w-sub{font-size:10px;color:var(--muted)}
-.w-pts{margin-left:auto;text-align:right}
-.w-pts-n{font-size:18px;font-weight:800;color:var(--green)}
+
+/* Hero floating cards */
+.hero-float{position:relative;z-index:2;margin-top:76px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.hf{padding:20px 24px;min-width:120px}
+.hf .n{font-size:36px;font-weight:900;letter-spacing:-0.05em}
+.hf .n em{color:var(--green);font-style:normal}
+.hf .l{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* Wallet card preview */
+.hf-wallet{min-width:240px;padding:20px}
+.w-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.w-av{width:36px;height:36px;background:var(--green2);border-radius:10px;display:grid;place-items:center;font-size:12px;font-weight:900;color:#000;flex-shrink:0}
+.w-nm{font-size:13px;font-weight:700}
+.w-sb{font-size:10px;color:var(--muted)}
+.w-pts-n{font-size:20px;font-weight:900;color:var(--green);line-height:1}
 .w-pts-l{font-size:9px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
-.dots-r{display:flex;gap:6px;margin-bottom:12px}
-.dy{width:28px;height:28px;border-radius:50%;background:var(--green);display:grid;place-items:center}
-.dy svg{width:12px;height:12px;stroke:#000;fill:none;stroke-width:3}
-.dn{width:28px;height:28px;border-radius:50%;background:var(--faint)}
-.wft{display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border)}
-.wfl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.wfv{font-size:12px;font-weight:700;color:var(--dim)}
-/* ── BENTO ── */
-.bento-section{background:var(--bg1)}
-.bento-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(210px,auto);gap:14px;margin-top:60px}
-@media(max-width:900px){.bento-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:480px){.bento-grid{grid-template-columns:1fr}}
-.bc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;position:relative;overflow:hidden;cursor:default;transition:border-color .3s,transform .25s,box-shadow .3s}
-.bc::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(34,197,94,.06),transparent 60%);opacity:0;transition:opacity .4s;pointer-events:none}
-.bc:hover{border-color:rgba(255,255,255,.14);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,.4)}
+.w-dots{display:flex;gap:6px;margin-bottom:14px}
+.wd-y{width:30px;height:30px;border-radius:50%;background:var(--green);display:grid;place-items:center}
+.wd-y svg{width:12px;height:12px;stroke:#000;fill:none;stroke-width:3}
+.wd-n{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid var(--border)}
+.w-foot{display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border)}
+.w-fl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.w-fv{font-size:12px;font-weight:700;color:var(--dim)}
+
+/* ─── HOW IT WORKS ─── */
+.how-section{background:var(--bg1)}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:60px}
+@media(max-width:900px){.steps-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.steps-grid{grid-template-columns:1fr}}
+.step-card{padding:32px 26px;position:relative;overflow:hidden;transition:all .3s}
+.step-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(34,197,94,.07),transparent 55%);opacity:0;transition:opacity .4s;pointer-events:none}
+.step-card:hover{border-color:rgba(255,255,255,.15);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.step-card:hover::after{opacity:1}
+.step-n{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--green);margin-bottom:18px}
+.step-icon{width:48px;height:48px;background:rgba(34,197,94,.09);border:1px solid var(--green-border);border-radius:14px;display:grid;place-items:center;margin-bottom:18px}
+.step-icon svg{width:22px;height:22px;stroke:var(--green);fill:none;stroke-width:1.8}
+.step-card h3{font-size:16px;font-weight:800;letter-spacing:-0.025em;margin-bottom:8px}
+.step-card p{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* ─── WALLET SHOWCASE ─── */
+.wallet-section{background:var(--bg)}
+.wallet-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+@media(max-width:900px){.wallet-layout{grid-template-columns:1fr;gap:56px}}
+.wallet-features{display:flex;flex-direction:column;gap:18px;margin-top:32px}
+.wf-row{display:flex;gap:14px;align-items:flex-start}
+.wf-ico{width:38px;height:38px;background:var(--green-glass);border:1px solid var(--green-border);border-radius:11px;display:grid;place-items:center;flex-shrink:0}
+.wf-ico svg{width:17px;height:17px;stroke:var(--green);fill:none;stroke-width:2}
+.wf-t{font-size:14px;font-weight:700;margin-bottom:3px}
+.wf-s{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* Wallet mockup visual */
+.wallet-visual{position:relative;display:flex;flex-direction:column;align-items:center;gap:20px}
+.wallet-phone{background:linear-gradient(160deg,#0c1a0c,#0f2818);border:1px solid rgba(34,197,94,.18);border-radius:26px;padding:30px 26px;max-width:300px;width:100%;box-shadow:0 0 0 1px rgba(255,255,255,.04),0 40px 100px rgba(0,0,0,.6),0 0 80px rgba(34,197,94,.08)}
+.wp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.wp-name{font-size:20px;font-weight:800}
+.wp-sub{font-size:11px;color:var(--muted);margin-top:1px}
+.wp-logo{width:48px;height:48px;background:var(--green2);border-radius:13px;display:grid;place-items:center}
+.wp-logo svg{width:22px;height:22px;fill:#fff}
+.wp-dots{display:flex;gap:8px;margin-bottom:20px}
+.wd-y2{width:36px;height:36px;border-radius:50%;background:var(--green);display:grid;place-items:center}
+.wd-y2 svg{width:14px;height:14px;stroke:#000;fill:none;stroke-width:3}
+.wd-n2{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1)}
+.wp-foot{display:flex;justify-content:space-between;padding-top:16px;border-top:1px solid rgba(255,255,255,.06)}
+.wp-fl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.wp-fv{font-size:15px;font-weight:800}
+.wp-pts{font-size:28px;font-weight:900;color:var(--green)}
+
+.wallet-badges{display:flex;gap:10px}
+.wb{background:rgba(5,5,5,.85);border:1px solid var(--border2);border-radius:14px;padding:10px 16px;display:flex;align-items:center;gap:8px;backdrop-filter:blur(12px)}
+.wb span{font-size:12px;color:var(--dim);font-weight:500}
+
+/* Floating notification */
+.wp-notif{position:absolute;top:-20px;right:-20px;background:rgba(5,5,5,.9);border:1px solid var(--border2);border-radius:16px;padding:14px 16px;backdrop-filter:blur(16px);max-width:220px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+@media(max-width:480px){.wp-notif{display:none}}
+.wn-t{font-size:11px;font-weight:700;margin-bottom:3px}
+.wn-s{font-size:10px;color:var(--muted)}
+.wn-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex-shrink:0}
+
+/* ─── PUSH COMPARISON ─── */
+.push-section{background:var(--bg1);overflow:hidden}
+.push-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:780px;margin:56px auto 0}
+@media(max-width:600px){.push-grid{grid-template-columns:1fr}}
+.push-card{padding:36px;text-align:center}
+.push-cost{font-size:72px;font-weight:900;letter-spacing:-0.05em;line-height:1;margin:16px 0 8px}
+.push-unit{font-size:13px;color:var(--muted);margin-bottom:24px}
+.push-list{display:flex;flex-direction:column;gap:9px;text-align:left}
+.pl-row{font-size:13px;display:flex;align-items:center;gap:9px}
+.pl-yes{color:var(--green)}
+.pl-no{color:rgba(255,80,80,.45)}
+
+/* ─── BENTO FEATURES ─── */
+.bento-section{background:var(--bg)}
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(200px,auto);gap:12px;margin-top:60px}
+@media(max-width:940px){.bento{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.bento{grid-template-columns:1fr}}
+.bc{padding:28px;position:relative;overflow:hidden;cursor:default;transition:all .28s}
+.bc::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(34,197,94,.07),transparent 55%);opacity:0;transition:opacity .4s;pointer-events:none}
+.bc:hover{border-color:rgba(255,255,255,.14);transform:translateY(-3px);box-shadow:0 20px 60px rgba(0,0,0,.45)}
 .bc:hover::before{opacity:1}
 .bc.s2{grid-column:span 2}
-.bc.s3{grid-column:span 3}
-@media(max-width:900px){.bc.s2,.bc.s3{grid-column:span 2}}
-@media(max-width:480px){.bc.s2,.bc.s3{grid-column:span 1}}
-.bc.dark{background:var(--bg);border-color:var(--border2)}
-.bc.glow{border-color:rgba(34,197,94,.2);background:rgba(34,197,94,.03)}
-.bi{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;margin-bottom:16px;background:rgba(255,255,255,.05);border:1px solid var(--border)}
-.bi svg{width:20px;height:20px;stroke:rgba(255,255,255,.65);fill:none;stroke-width:1.8}
-.bi.g{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.2)}
+@media(max-width:940px){.bc.s2{grid-column:span 2}}
+@media(max-width:480px){.bc.s2{grid-column:span 1}}
+.bi{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;margin-bottom:16px;background:var(--glass2);border:1px solid var(--border)}
+.bi svg{width:21px;height:21px;stroke:var(--dim);fill:none;stroke-width:1.8}
+.bi.g{background:var(--green-glass);border-color:var(--green-border)}
 .bi.g svg{stroke:var(--green)}
-.bc h3{font-size:16px;font-weight:800;letter-spacing:-0.025em;color:var(--white);margin-bottom:7px}
+.bc h3{font-size:16px;font-weight:800;letter-spacing:-0.025em;margin-bottom:7px}
 .bc p{font-size:13px;color:var(--muted);line-height:1.7}
-/* notif list */
-.bn-list{display:flex;flex-direction:column;gap:8px;margin-top:16px}
-.bn-row{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--r-xs);padding:10px 12px}
-.bn-ic{width:32px;height:32px;border-radius:8px;background:var(--bg3);display:grid;place-items:center;flex-shrink:0}
-.bn-ic svg{width:14px;height:14px;stroke:rgba(255,255,255,.55);fill:none;stroke-width:2}
+
+/* Push notif list in bento */
+.bn-list{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.bn-row{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+.bn-ic{width:30px;height:30px;border-radius:8px;background:var(--bg3);display:grid;place-items:center;flex-shrink:0}
+.bn-ic svg{width:13px;height:13px;stroke:var(--dim);fill:none;stroke-width:2}
 .bn-b{flex:1;min-width:0}
-.bn-t{font-size:12px;font-weight:700;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bn-t{font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bn-s{font-size:10px;color:var(--muted)}
 .bn-chip{font-size:9px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap}
 .cg{background:rgba(34,197,94,.12);color:var(--green)}
 .cb{background:rgba(96,165,250,.1);color:#93c5fd}
 .cp{background:rgba(168,85,247,.1);color:#c4b5fd}
-/* multisite */
-.ms-g{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
-.ms-b{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r-xs);padding:12px;transition:border-color .2s}
-.ms-b:hover{border-color:rgba(34,197,94,.2)}
-.ms-ci{font-size:11px;color:var(--muted);margin-bottom:4px}
-.ms-n{font-size:24px;font-weight:900;letter-spacing:-0.04em;color:var(--white)}
-.ms-la{font-size:10px;color:var(--muted)}
-.ms-add{display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.15);font-size:22px;border:1.5px dashed var(--border);border-radius:var(--r-xs);padding:12px}
-/* stat big */
-.stat-big{margin-top:16px}
-.stat-big .n{font-size:clamp(48px,8vw,72px);font-weight:900;letter-spacing:-0.05em;color:var(--white);line-height:1}
+
+/* Stat big */
+.stat-big .n{font-size:clamp(48px,7vw,68px);font-weight:900;letter-spacing:-0.05em;line-height:1;margin-top:16px}
 .stat-big .n em{color:var(--green);font-style:normal}
 .stat-big .l{font-size:12px;color:var(--muted);margin-top:4px}
-/* phone */
-.phone-mock{background:var(--bg3);border:5px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden;max-width:130px;margin:16px auto 0;box-shadow:0 0 40px rgba(34,197,94,.1)}
-.ph-st{background:var(--bg3);padding:5px 10px 3px;display:flex;justify-content:space-between;font-size:7px;color:var(--muted)}
-.ph-sc{background:var(--bg4);padding:8px}
-.ph-l{font-size:7px;color:var(--muted);margin-bottom:5px;font-weight:600}
-.ph-card{background:linear-gradient(135deg,#0b1f0b,#163a16);border-radius:7px;padding:9px;border:1px solid rgba(34,197,94,.12)}
-.ph-ct{display:flex;justify-content:space-between;font-size:6px;margin-bottom:5px;color:rgba(255,255,255,.4)}
-.ph-cn{font-size:8px;font-weight:800;color:var(--white)}
-.ph-pts{font-size:6px;color:var(--green)}
-.ph-dots{display:flex;gap:3px;margin:4px 0}
-.ph-dy{width:11px;height:11px;border-radius:50%;background:var(--green)}
-.ph-dn{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.07)}
-.ph-ok{background:var(--green);color:#000;font-size:7px;font-weight:900;padding:3px 7px;border-radius:4px;display:flex;align-items:center;gap:3px;margin-top:5px}
-/* data card */
-.dc{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r-xs);overflow:hidden;margin-top:14px}
-.dc-h{display:flex;align-items:center;gap:10px;padding:11px 13px;border-bottom:1px solid var(--border)}
-.dc-av{width:32px;height:32px;background:var(--bg4);border-radius:50%;display:grid;place-items:center;flex-shrink:0}
-.dc-av svg{width:15px;height:15px;stroke:var(--muted);fill:none;stroke-width:2}
-.dc-nm{font-size:12px;font-weight:700;color:var(--white)}
-.dc-sb{font-size:9px;color:var(--muted)}
-.dc-fs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
-.dc-f{background:var(--bg3);padding:7px 9px;font-size:9px;color:var(--muted);display:flex;align-items:center;gap:4px}
-.dc-f svg{width:9px;height:9px;stroke:rgba(255,255,255,.2);fill:none;stroke-width:2;flex-shrink:0}
-.dc-sts{display:grid;grid-template-columns:repeat(3,1fr)}
-.dc-s{padding:9px 6px;text-align:center;border-right:1px solid var(--border)}
-.dc-s:last-child{border-right:none}
-.dc-sn{font-size:16px;font-weight:800;color:var(--white)}
-.dc-sl{font-size:8px;color:var(--muted)}
-/* google */
-.gr{display:flex;align-items:baseline;gap:10px;margin-top:14px}
-.gr-big{font-size:56px;font-weight:900;letter-spacing:-0.05em;color:var(--white)}
-.gr-stars{font-size:18px;letter-spacing:2px;color:#fbbf24}
+
+/* Multi-site */
+.ms-g{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:14px}
+.ms-b{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:12px;transition:border-color .2s}
+.ms-b:hover{border-color:var(--green-border)}
+.ms-ci{font-size:10px;color:var(--muted);margin-bottom:3px}
+.ms-n{font-size:24px;font-weight:900;letter-spacing:-0.04em}
+.ms-la{font-size:10px;color:var(--muted)}
+.ms-add{display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.12);font-size:22px;border:1.5px dashed var(--border);border-radius:10px;padding:12px}
+
+/* Google rating */
+.gr{display:flex;align-items:baseline;gap:12px;margin-top:16px}
+.gr-big{font-size:58px;font-weight:900;letter-spacing:-0.05em;line-height:1}
+.gr-stars{font-size:16px;color:#fbbf24;letter-spacing:2px}
 .gr-lbl{font-size:11px;color:var(--muted);margin-top:3px}
-.gr-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.18);color:var(--green);font-size:11px;font-weight:700;padding:5px 12px;border-radius:50px;margin-top:10px}
+.gr-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-glass);border:1px solid var(--green-border);color:var(--green);font-size:11px;font-weight:700;padding:5px 12px;border-radius:50px;margin-top:10px}
 .gr-badge svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2.5}
-/* ── ROULETTE ── */
-.roulette-section{background:var(--bg);overflow:hidden}
-.roulette-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(34,197,94,.08),transparent 70%);pointer-events:none}
-.roul-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1}
-@media(max-width:900px){.roul-layout{grid-template-columns:1fr;gap:56px}}
-.new-badge{background:var(--green);color:#000;font-size:10px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;padding:4px 10px;border-radius:50px}
-.roul-label{display:flex;align-items:center;gap:8px;margin-bottom:18px}
-.roul-title{font-size:clamp(36px,5vw,62px);font-weight:900;letter-spacing:-0.05em;line-height:1;margin-bottom:18px}
+
+/* ─── ROULETTE ─── */
+.roulette-section{background:var(--bg1);overflow:hidden}
+.roulette-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 0%,rgba(34,197,94,.07),transparent 70%);pointer-events:none}
+.roul-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative;z-index:1}
+@media(max-width:900px){.roul-layout{grid-template-columns:1fr;gap:48px}}
+.roul-badge{display:flex;align-items:center;gap:8px;margin-bottom:20px}
+.badge-new{background:var(--green);color:#000;font-size:10px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;padding:4px 11px;border-radius:50px}
+.roul-title{font-size:clamp(36px,5vw,64px);font-weight:900;letter-spacing:-0.055em;line-height:1.01;margin-bottom:18px}
 .roul-title .acc{color:var(--green)}
-.roul-desc{font-size:15px;color:var(--dim);line-height:1.75;margin-bottom:36px}
-.r-steps{display:flex;flex-direction:column;gap:16px;margin-bottom:36px}
-.rstep{display:flex;gap:14px}
-.rsn{width:26px;height:26px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.22);border-radius:8px;display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--green);flex-shrink:0;margin-top:2px}
-.rstep h4{font-size:14px;font-weight:700;color:var(--white);margin-bottom:2px}
+.roul-desc{font-size:15px;color:var(--dim);line-height:1.8;margin-bottom:32px}
+.r-steps{display:flex;flex-direction:column;gap:14px;margin-bottom:36px}
+.rstep{display:flex;gap:13px}
+.rsn{width:26px;height:26px;background:var(--green-glass);border:1px solid var(--green-border);border-radius:8px;display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--green);flex-shrink:0;margin-top:2px}
+.rstep h4{font-size:14px;font-weight:700;margin-bottom:2px}
 .rstep p{font-size:13px;color:var(--muted);line-height:1.5}
-.wheel-side{display:flex;flex-direction:column;align-items:center;gap:22px}
-.wheel-wrap{position:relative;width:360px;height:360px}
-@media(max-width:440px){.wheel-wrap{width:280px;height:280px}}
-.w-arrow{position:absolute;top:-14px;left:50%;transform:translateX(-50%);z-index:10;width:0;height:0;border-left:13px solid transparent;border-right:13px solid transparent;border-top:26px solid var(--green);filter:drop-shadow(0 4px 12px rgba(34,197,94,.7))}
-#wcanvas{border-radius:50%;display:block;box-shadow:0 0 0 2px rgba(255,255,255,.04),0 0 60px rgba(34,197,94,.13),0 0 130px rgba(34,197,94,.05)}
-.w-hub{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;background:var(--bg);border-radius:50%;border:2px solid rgba(255,255,255,.08);display:grid;place-items:center;cursor:pointer;z-index:5;transition:all .2s}
+
+/* Wheel — fully responsive */
+.wheel-side{display:flex;flex-direction:column;align-items:center;gap:20px;width:100%}
+.wheel-wrap{position:relative;width:min(360px,100%);aspect-ratio:1}
+.w-arrow{position:absolute;top:-12px;left:50%;transform:translateX(-50%);z-index:10;width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:24px solid var(--green);filter:drop-shadow(0 4px 14px rgba(34,197,94,.8))}
+#wcanvas{display:block;width:100%;height:100%;border-radius:50%;box-shadow:0 0 0 1.5px rgba(255,255,255,.04),0 0 70px rgba(34,197,94,.12),0 0 140px rgba(34,197,94,.05)}
+.w-hub{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;background:var(--bg);border-radius:50%;border:2px solid rgba(255,255,255,.1);display:grid;place-items:center;cursor:pointer;z-index:5;transition:all .2s}
 .w-hub:hover{border-color:var(--green);background:rgba(34,197,94,.07)}
-.w-hub svg{width:20px;height:20px;stroke:rgba(255,255,255,.55);fill:none;stroke-width:2;margin-left:2px}
-.spin-btn{background:var(--green);color:#000;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:900;padding:15px 48px;border-radius:50px;border:none;cursor:pointer;letter-spacing:-0.01em;transition:all .25s}
-.spin-btn:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 12px 40px rgba(34,197,94,.45)}
-.spin-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
-.wheel-result{background:rgba(255,255,255,.04);backdrop-filter:blur(20px);border:1px solid var(--border2);border-radius:var(--r);padding:24px 32px;text-align:center;width:100%;display:none}
+.w-hub svg{width:20px;height:20px;stroke:var(--dim);fill:none;stroke-width:2;margin-left:2px}
+.spin-btn{background:var(--green);color:#000;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:900;padding:15px 44px;border-radius:50px;border:none;cursor:pointer;letter-spacing:-0.01em;transition:all .25s;width:100%;max-width:340px}
+.spin-btn:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 14px 44px rgba(34,197,94,.45)}
+.spin-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+#spinNote{display:none;font-size:12px;color:var(--muted);text-align:center;max-width:340px;line-height:1.6}
+.wheel-result{background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--border2);border-radius:var(--r);padding:22px 28px;text-align:center;width:100%;max-width:340px;display:none}
 .wheel-result.show{display:block;animation:pop .4s cubic-bezier(.16,1,.3,1)}
 @keyframes pop{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:scale(1)}}
-.wr-prize{font-size:30px;font-weight:900;letter-spacing:-0.04em;color:var(--green);margin-bottom:4px}
-.wr-sub{font-size:13px;color:var(--muted);margin-bottom:18px}
-.wr-btn{display:flex;align-items:center;gap:8px;background:var(--white);color:#000;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:800;padding:13px 26px;border-radius:50px;cursor:pointer;border:none;width:100%;justify-content:center;transition:all .2s}
-.wr-btn:hover{background:#e8e8e8;transform:translateY(-1px)}
-.wr-btn svg{width:18px;height:18px;flex-shrink:0}
-/* ── CALCULATOR ── */
-.calc-section{background:var(--bg1)}
-.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:60px}
-@media(max-width:700px){.calc-grid{grid-template-columns:1fr}}
-.calc-l{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:36px}
-.calc-r{background:var(--bg);border:1px solid var(--border2);border-radius:var(--r);padding:36px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
-.calc-r::before{content:'';position:absolute;top:-60px;right:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(34,197,94,.1),transparent 70%);pointer-events:none}
-.c-lbl{font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:500}
-.c-val{font-size:26px;font-weight:800;letter-spacing:-0.04em;color:var(--white);margin-bottom:8px}
-input[type=range]{width:100%;height:2px;background:rgba(255,255,255,.1);border-radius:2px;-webkit-appearance:none;outline:none;cursor:pointer;margin-bottom:24px;accent-color:var(--green)}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:var(--white);border-radius:50%;cursor:pointer;box-shadow:0 0 0 3px rgba(34,197,94,.3)}
-.tabs{display:flex;gap:6px;margin-bottom:24px}
-.tab-btn{padding:8px 16px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border2);color:var(--muted);background:transparent;transition:all .2s;font-family:'DM Sans',sans-serif}
-.tab-btn.on{background:var(--white);color:#000;border-color:var(--white)}
-.c-note{font-size:12px;color:var(--muted);margin-bottom:6px}
-.c-big{font-size:clamp(48px,7vw,76px);font-weight:900;letter-spacing:-0.05em;color:var(--white);line-height:1;margin-bottom:4px;position:relative;z-index:1}
-.c-big em{color:var(--green);font-style:normal}
-.c-mo{font-size:12px;color:var(--muted);margin-bottom:24px;position:relative;z-index:1}
-.c-pills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:28px;position:relative;z-index:1}
-.c-pill{font-size:11px;font-weight:700;padding:5px 12px;border-radius:8px;background:rgba(34,197,94,.09);border:1px solid rgba(34,197,94,.18);color:var(--green)}
-/* ── TESTIMONIALS ── */
-.proof-section{background:var(--bg)}
-.logos-row{display:flex;gap:10px;overflow-x:auto;padding:4px 0;scrollbar-width:none;margin:32px 0 52px}
+.wr-prize{font-size:28px;font-weight:900;letter-spacing:-0.04em;color:var(--green);margin-bottom:4px}
+.wr-sub{font-size:13px;color:var(--muted);margin-bottom:16px}
+.wr-btn{display:flex;align-items:center;gap:8px;background:var(--white);color:#000;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:800;padding:12px 24px;border-radius:50px;cursor:pointer;border:none;width:100%;justify-content:center;transition:all .2s}
+.wr-btn:hover{background:#eee;transform:translateY(-1px)}
+.wr-btn svg{width:17px;height:17px;flex-shrink:0}
+
+/* ─── PRICING ─── */
+.price-section{background:var(--bg)}
+.price-card{max-width:680px;margin:60px auto 0;padding:52px;position:relative;overflow:hidden;text-align:center}
+.price-card::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(34,197,94,.1),transparent 65%);pointer-events:none}
+.price-badge{display:inline-block;background:var(--green);color:#000;font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:50px;margin-bottom:18px;position:relative;z-index:1}
+.price-amount{font-size:80px;font-weight:900;letter-spacing:-0.07em;line-height:1;position:relative;z-index:1}
+.price-amount em{color:var(--green);font-style:normal}
+.price-per{font-size:14px;color:var(--muted);margin-bottom:32px;position:relative;z-index:1}
+.price-features{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:36px;text-align:left;position:relative;z-index:1}
+@media(max-width:500px){.price-features{grid-template-columns:1fr}}
+.pf{font-size:14px;color:var(--dim);display:flex;align-items:center;gap:9px}
+.pf svg{width:16px;height:16px;stroke:var(--green);fill:none;stroke-width:2.5;flex-shrink:0}
+.price-cta{position:relative;z-index:1}
+.price-note{font-size:12px;color:var(--muted);margin-top:12px;position:relative;z-index:1}
+
+/* ─── TESTIMONIALS ─── */
+.proof-section{background:var(--bg1)}
+.logos-row{display:flex;gap:8px;overflow-x:auto;padding:4px 0;scrollbar-width:none;margin:32px 0 52px}
 .logos-row::-webkit-scrollbar{display:none}
-.lpill{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:50px;padding:8px 18px;font-size:12px;font-weight:600;white-space:nowrap;color:var(--muted)}
-.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.lpill{background:var(--glass);border:1px solid var(--border);border-radius:50px;padding:8px 18px;font-size:12px;font-weight:600;white-space:nowrap;color:var(--muted);backdrop-filter:blur(8px)}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 @media(max-width:860px){.rev-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.rev-grid{grid-template-columns:1fr}}
-.rcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:12px;transition:all .25s;cursor:default}
-.rcard:hover{border-color:rgba(255,255,255,.14);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,.5)}
+.rcard{padding:26px;display:flex;flex-direction:column;gap:12px;transition:all .25s;cursor:default}
+.rcard:hover{border-color:rgba(255,255,255,.14);transform:translateY(-3px);box-shadow:0 16px 50px rgba(0,0,0,.5)}
 .rcard-stars{color:#fbbf24;font-size:14px;letter-spacing:1px}
 .rcard-text{font-size:13.5px;color:var(--dim);line-height:1.75;flex:1}
-.rcard-name{font-size:14px;font-weight:700;color:var(--white)}
+.rcard-name{font-size:14px;font-weight:700}
 .rcard-role{font-size:11px;color:var(--muted)}
-/* ── FAQ ── */
+
+/* ─── FAQ ─── */
 .faq-section{background:var(--bg1)}
 .faq-list{max-width:740px;margin:56px auto 0;display:flex;flex-direction:column;gap:8px}
-.faq-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
-.faq-item.open{border-color:rgba(255,255,255,.12)}
+.faq-item{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
+.faq-item.open{border-color:var(--border2)}
 .faq-q{padding:20px 24px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:16px;user-select:none}
-.faq-q span{font-size:15px;font-weight:600;color:var(--white)}
-.faq-ic{width:28px;height:28px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;display:grid;place-items:center;flex-shrink:0;transition:all .25s}
+.faq-q span{font-size:15px;font-weight:600}
+.faq-ic{width:28px;height:28px;background:var(--glass2);border:1px solid var(--border);border-radius:8px;display:grid;place-items:center;flex-shrink:0;transition:all .25s}
 .faq-ic svg{width:13px;height:13px;stroke:var(--muted);fill:none;stroke-width:2.5;transition:transform .25s}
 .faq-item.open .faq-ic{background:var(--green);border-color:var(--green)}
 .faq-item.open .faq-ic svg{stroke:#000;transform:rotate(45deg)}
 .faq-a{font-size:14px;color:var(--muted);line-height:1.75;max-height:0;overflow:hidden;padding:0 24px;transition:max-height .35s ease,padding .35s ease}
 .faq-item.open .faq-a{max-height:400px;padding:0 24px 24px}
-/* ── CTA ── */
-.cta-section{background:var(--bg);padding:100px 0}
-.cta-box{max-width:740px;margin:0 auto;text-align:center;position:relative}
+
+/* ─── CTA ─── */
+.cta-section{background:var(--bg);padding:110px 0}
+.cta-box{max-width:760px;margin:0 auto;text-align:center;position:relative}
 .cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(34,197,94,.1),transparent 65%);pointer-events:none}
 .cta-box>*{position:relative;z-index:1}
-.cta-eye{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:20px}
-.cta-title{font-size:clamp(36px,6vw,72px);font-weight:900;letter-spacing:-0.055em;color:var(--white);line-height:1.02;margin-bottom:20px}
-.cta-desc{font-size:16px;color:var(--dim);line-height:1.75;margin-bottom:36px;max-width:500px;margin-left:auto;margin-right:auto}
-.cta-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:16px}
-.cta-note{font-size:13px;color:var(--muted)}
+.cta-title{font-size:clamp(40px,7vw,80px);font-weight:900;letter-spacing:-0.06em;line-height:.97;margin-bottom:22px}
+.cta-desc{font-size:17px;color:var(--dim);line-height:1.75;margin-bottom:36px;max-width:520px;margin-left:auto;margin-right:auto}
+.cta-note{font-size:13px;color:var(--muted);margin-top:12px}
 .cta-note a{color:var(--dim);text-decoration:underline;text-underline-offset:3px}
-/* ── FOOTER ── */
-footer{background:#000;border-top:1px solid var(--border);padding:64px 0 36px}
+
+/* ─── FOOTER ─── */
+footer{background:#000;border-top:1px solid var(--border);padding:68px 0 36px}
 .foot-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 1fr;gap:40px;margin-bottom:52px}
-@media(max-width:900px){.foot-grid{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:940px){.foot-grid{grid-template-columns:1fr 1fr 1fr}}
 @media(max-width:560px){.foot-grid{grid-template-columns:1fr 1fr}}
 .foot-brand p{font-size:13px;color:var(--muted);margin:12px 0 18px;line-height:1.7;max-width:200px}
 .foot-soc{display:flex;gap:8px}
@@ -279,98 +347,243 @@ footer{background:#000;border-top:1px solid var(--border);padding:64px 0 36px}
 .foot-bot{border-top:1px solid var(--border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 .foot-bot p,.foot-bot a{font-size:12px;color:rgba(255,255,255,.2);text-decoration:none}
 .foot-bot a:hover{color:var(--muted)}
-/* ── MODAL ── */
-.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(18px);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+
+/* ─── MODAL ─── */
+.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(20px);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
 .modal-ov.open{opacity:1;pointer-events:all}
 .modal-box{background:var(--bg2);border:1px solid var(--border2);border-radius:28px;padding:44px;max-width:460px;width:100%;text-align:center;transform:scale(.93) translateY(20px);transition:transform .35s cubic-bezier(.16,1,.3,1)}
 .modal-ov.open .modal-box{transform:scale(1) translateY(0)}
-.m-icon{width:64px;height:64px;background:rgba(34,197,94,.09);border:1px solid rgba(34,197,94,.18);border-radius:20px;display:grid;place-items:center;margin:0 auto 18px}
+.m-icon{width:64px;height:64px;background:var(--green-glass);border:1px solid var(--green-border);border-radius:20px;display:grid;place-items:center;margin:0 auto 18px}
 .m-icon svg{width:30px;height:30px;stroke:var(--green);fill:none;stroke-width:1.8}
-.m-prize{font-size:48px;font-weight:900;letter-spacing:-0.05em;color:var(--green);margin-bottom:4px}
-.m-sub{font-size:14px;color:var(--muted);margin-bottom:28px}
-.m-sep{border:none;border-top:1px solid var(--border);margin:0 0 24px}
-.m-ask{font-size:18px;font-weight:800;color:var(--white);letter-spacing:-0.02em;margin-bottom:6px}
+.m-prize{font-size:46px;font-weight:900;letter-spacing:-0.05em;color:var(--green);margin-bottom:4px}
+.m-sub{font-size:14px;color:var(--muted);margin-bottom:26px}
+.m-sep{border:none;border-top:1px solid var(--border);margin:0 0 22px}
+.m-ask{font-size:18px;font-weight:800;letter-spacing:-0.02em;margin-bottom:6px}
 .m-asksub{font-size:13px;color:var(--muted);margin-bottom:22px}
 .m-gbtn{display:flex;align-items:center;gap:10px;background:var(--white);color:#000;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:800;padding:14px 28px;border-radius:50px;cursor:pointer;border:none;width:100%;justify-content:center;transition:all .2s;margin-bottom:10px}
-.m-gbtn:hover{background:#ebebeb;transform:translateY(-1px)}
+.m-gbtn:hover{background:#eee;transform:translateY(-1px)}
 .m-skip{font-size:12px;color:rgba(255,255,255,.18);cursor:pointer;background:none;border:none;width:100%;padding:8px;text-align:center;transition:color .2s}
 .m-skip:hover{color:var(--muted)}
+
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
-<div id="cursor-light"></div>
+<div id="clight"></div>
 
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
     <div class="nav-pill" id="navPill">
       <a href="/" class="logo">
-        <div class="logo-mark"><svg viewBox="0 0 16 16"><rect x="2" y="2" width="5" height="5" rx="1.2"/><rect x="9" y="2" width="5" height="5" rx="1.2"/><rect x="2" y="9" width="5" height="5" rx="1.2"/><rect x="9" y="9" width="5" height="5" rx="1.2"/></svg></div>
+        <div class="logo-icon"><svg viewBox="0 0 16 16"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg></div>
         Fidpass
       </a>
       <ul class="nav-links">
+        <li><a href="#how">Comment ça marche</a></li>
         <li><a href="#features">Fonctionnalités</a></li>
         <li><a href="#roulette">Roulette Avis</a></li>
-        <li><a href="#calculator">Calculateur</a></li>
+        <li><a href="#tarifs">Tarifs</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
-      <a href="https://app.fidpass.fr" class="btn btn-secondary btn-sm" style="background:transparent;border-color:var(--border2);color:var(--dim)">Se connecter</a>
-      <a href="https://app.fidpass.fr/register" class="btn btn-primary btn-sm">Démo gratuite →</a>
+      <div class="nav-right">
+        <a href="https://app.fidpass.fr" class="btn btn-g btn-sm">Se connecter</a>
+      </div>
     </div>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg">
-    <div class="hero-glow g1"></div>
-    <div class="hero-glow g2"></div>
-    <div class="hero-glow g3"></div>
-    <div class="hero-grid"></div>
+  <div class="hero-orbs">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
   </div>
+  <div class="hero-grid"></div>
+
   <div class="hero-content reveal">
-    <div class="tag tag-green"><span class="tag-dot"></span>Carte de fidélité digitale · Zéro appli</div>
-    <h1>Chaque client qui part<br>sans <span class="grad">revenir</span>,<br>c'est de l'argent perdu.</h1>
-    <p class="hero-sub">Fidpass met une carte de fidélité dans le téléphone de vos clients en 2 clics. Vous récupérez leurs coordonnées. Vous les relancez gratuitement. Ils reviennent.</p>
-    <div class="hero-ctas">
-      <a href="https://app.fidpass.fr/register" class="btn btn-primary btn-lg">Réserver une démo gratuite →</a>
-      <a href="#features" class="btn btn-secondary btn-lg">Voir comment ça marche</a>
+    <div class="tag tag-g"><span class="dot"></span>Carte de fidélité digitale · Zéro appli</div>
+    <h1>Chaque client sans<br><span class="grad">fidélité</span>, c'est un<br>concurrent qui gagne.</h1>
+    <p class="hero-sub">Fidpass met une carte de fidélité dans le Wallet de vos clients en 2 clics. Vous récupérez leurs coordonnées, vous les relancez gratuitement — ils reviennent.</p>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px">
+      <a href="https://app.fidpass.fr" class="btn btn-p btn-lg">Se connecter →</a>
+      <a href="#how" class="btn btn-g btn-lg">Voir comment ça marche</a>
     </div>
-    <p class="hero-note">Préférez un appel de 15 min ? <a href="mailto:contact@fidpass.fr">Choisir un créneau →</a></p>
+    <p class="hero-note">Une question ? <a href="mailto:contact@fidpass.fr">Contactez-nous →</a></p>
   </div>
-  <div class="hero-cards reveal d2">
-    <div class="hcard" style="min-width:130px">
+
+  <!-- Floating stats -->
+  <div class="hero-float reveal d2">
+    <div class="hf glass">
       <div class="n">+<span class="counter" data-target="30">0</span><em>%</em></div>
       <div class="l">CA supplémentaire</div>
     </div>
-    <div class="hcard hcard-wallet">
-      <div class="w-top">
+    <div class="hf hf-wallet glass">
+      <div class="w-head">
         <div class="w-av">FP</div>
-        <div><div class="w-name">Votre Commerce</div><div class="w-sub">Carte de fidélité</div></div>
-        <div class="w-pts"><div class="w-pts-n">240</div><div class="w-pts-l">Points</div></div>
+        <div style="flex:1"><div class="w-nm">Votre Commerce</div><div class="w-sb">Carte de fidélité</div></div>
+        <div style="text-align:right"><div class="w-pts-n">240</div><div class="w-pts-l">Points</div></div>
       </div>
-      <div class="dots-r">
-        <div class="dy"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
-        <div class="dy"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
-        <div class="dy"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
-        <div class="dy"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
-        <div class="dy"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
-        <div class="dn"></div><div class="dn"></div><div class="dn"></div>
+      <div class="w-dots">
+        <div class="wd-y"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
+        <div class="wd-y"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
+        <div class="wd-y"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
+        <div class="wd-y"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
+        <div class="wd-y"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
+        <div class="wd-n"></div><div class="wd-n"></div><div class="wd-n"></div>
       </div>
-      <div class="wft">
-        <div><div class="wfl">Récompense</div><div class="wfv">8e offert</div></div>
-        <div><div class="wfl">Membre</div><div class="wfv">Sophie M.</div></div>
+      <div class="w-foot">
+        <div><div class="w-fl">Récompense</div><div class="w-fv">Café offert</div></div>
+        <div><div class="w-fl">Membre</div><div class="w-fv">Sophie M.</div></div>
       </div>
     </div>
-    <div class="hcard" style="min-width:130px">
+    <div class="hf glass">
       <div class="n"><em>0€</em></div>
       <div class="l">Push illimités</div>
     </div>
-    <div class="hcard" style="min-width:130px">
+    <div class="hf glass">
       <div class="n"><span class="counter" data-target="24">0</span><em>h</em></div>
       <div class="l">Pour démarrer</div>
     </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="wrap">
+    <div class="tc reveal">
+      <div class="sec-label">Comment ça marche</div>
+      <h2 class="sec-title">Opérationnel en 24h,<br>vos clients fidélisés dès le lendemain.</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card glass reveal">
+        <div class="step-n">Étape 01</div>
+        <div class="step-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3m0 0v3m0-3 4 4"/></svg></div>
+        <h3>Votre QR code en caisse</h3>
+        <p>On crée votre carte personnalisée. Vous imprimez le QR code. Prêt en moins de 24h.</p>
+      </div>
+      <div class="step-card glass reveal d1">
+        <div class="step-n">Étape 02</div>
+        <div class="step-icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01" stroke-width="3"/></svg></div>
+        <h3>Le client scanne et ajoute sa carte</h3>
+        <p>2 clics dans Apple Wallet ou Google Wallet. Zéro appli, zéro compte, zéro friction.</p>
+      </div>
+      <div class="step-card glass reveal d2">
+        <div class="step-n">Étape 03</div>
+        <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></div>
+        <h3>Vous l'engagez par push gratuit</h3>
+        <p>Relances anniversaire, promo flash, expiration de points — en 1 clic. 0€.</p>
+      </div>
+      <div class="step-card glass reveal d3">
+        <div class="step-n">Étape 04</div>
+        <div class="step-icon"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg></div>
+        <h3>Il revient — et recommande</h3>
+        <p>La Roulette Avis transforme chaque nouveau client en ambassadeur Google.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WALLET SHOWCASE -->
+<section class="wallet-section" id="wallet">
+  <div class="wrap">
+    <div class="wallet-layout">
+      <div class="reveal">
+        <div class="sec-label">Apple Wallet · Google Wallet</div>
+        <h2 class="sec-title">Le client l'ajoute<br>à son Wallet —<br><span class="grad">2 clics suffisent.</span></h2>
+        <p style="font-size:16px;color:var(--dim);line-height:1.8;margin:18px 0 0">Pas d'appli à télécharger. Pas de compte à créer. La carte vit dans l'app native de son téléphone — celle qu'il connaît déjà.</p>
+        <div class="wallet-features">
+          <div class="wf-row">
+            <div class="wf-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div><div class="wf-t">Visible sur l'écran de verrouillage</div><div class="wf-s">La carte apparaît automatiquement quand le client est proche de votre établissement.</div></div>
+          </div>
+          <div class="wf-row">
+            <div class="wf-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div><div class="wf-t">Mise à jour en temps réel</div><div class="wf-s">Points, tampons, récompenses — la carte se synchronise instantanément.</div></div>
+          </div>
+          <div class="wf-row">
+            <div class="wf-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div><div class="wf-t">Compatible iOS et Android</div><div class="wf-s">Apple Wallet pour iPhone, Google Wallet pour Android. 100% du marché couvert.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="wallet-visual reveal d2">
+        <div style="position:relative">
+          <div class="wallet-phone">
+            <div class="wp-header">
+              <div>
+                <div class="wp-name">Le Comptoir</div>
+                <div class="wp-sub">Carte de fidélité Fidpass</div>
+              </div>
+              <div class="wp-logo"><svg viewBox="0 0 16 16"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg></div>
+            </div>
+            <div class="wp-dots">
+              <div class="wd-y2"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
+              <div class="wd-y2"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
+              <div class="wd-y2"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
+              <div class="wd-y2"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
+              <div class="wd-n2"></div>
+              <div class="wd-n2"></div>
+              <div class="wd-n2"></div>
+            </div>
+            <div class="wp-foot">
+              <div><div class="wp-fl">Membre</div><div class="wp-fv">Sophie M.</div></div>
+              <div style="text-align:right"><div class="wp-fl">Points</div><div class="wp-pts">240</div></div>
+            </div>
+          </div>
+          <!-- Floating notification -->
+          <div class="wp-notif glass">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+              <div class="wn-dot"></div>
+              <div class="wn-t">Fidpass · Maintenant</div>
+            </div>
+            <div class="wn-s">Vous êtes à côté ! Votre récompense vous attend chez Le Comptoir ☕</div>
+          </div>
+        </div>
+        <div class="wallet-badges">
+          <div class="wb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/></svg><span>Apple Wallet</span></div>
+          <div class="wb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.8"><path d="M12 22C6.48 22 2 17.52 2 12S6.48 2 12 2s10 4.48 10 10-4.48 10-10 10z"/><path d="M12 8v4l3 3"/></svg><span>Google Wallet</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUSH VS SMS -->
+<section class="push-section" id="push">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(34,197,94,.05),transparent 70%);pointer-events:none"></div>
+  <div class="wrap" style="position:relative;z-index:1">
+    <div class="tc reveal">
+      <div class="sec-label">Push notifications</div>
+      <h2 class="sec-title">Le bon message au bon moment,<br>sans frais — sans effort.</h2>
+      <p style="font-size:18px;color:var(--dim);max-width:560px;margin:18px auto 0;line-height:1.7">Notifications push gratuites et illimitées — là où 200 SMS vous coûteraient <strong style="color:var(--white)">7 €</strong> à chaque envoi.</p>
+    </div>
+    <div class="push-grid">
+      <div class="push-card glass reveal" style="opacity:.65">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">SMS classique</div>
+        <div class="push-cost" style="color:rgba(255,255,255,.25)">7<span style="font-size:36px">€</span></div>
+        <div class="push-unit">pour 200 messages</div>
+        <div class="push-list">
+          <div class="pl-row"><span class="pl-no">✕</span><span style="color:rgba(255,255,255,.25)">0,035 € / message</span></div>
+          <div class="pl-row"><span class="pl-no">✕</span><span style="color:rgba(255,255,255,.25)">Coûts qui s'accumulent</span></div>
+          <div class="pl-row"><span class="pl-no">✕</span><span style="color:rgba(255,255,255,.25)">Abonnement plateforme</span></div>
+          <div class="pl-row"><span class="pl-no">✕</span><span style="color:rgba(255,255,255,.25)">400 €+ / an pour 1 000 clients</span></div>
+        </div>
+      </div>
+      <div class="push-card glass-green reveal d1">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green)">Push Wallet — Fidpass</div>
+        <div class="push-cost"><em class="grad">0</em><span style="font-size:36px;color:var(--green)">€</span></div>
+        <div class="push-unit">envois illimités inclus</div>
+        <div class="push-list">
+          <div class="pl-row"><span class="pl-yes">✓</span><span style="color:var(--dim)">Illimité dans votre plan</span></div>
+          <div class="pl-row"><span class="pl-yes">✓</span><span style="color:var(--dim)">Natif Apple & Google Wallet</span></div>
+          <div class="pl-row"><span class="pl-yes">✓</span><span style="color:var(--dim)">Envoi en 1 clic, sans code</span></div>
+          <div class="pl-row"><span class="pl-yes">✓</span><span style="color:var(--dim)">Géolocalisation & anniversaires</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="reveal" style="text-align:center;font-size:13px;color:var(--muted);margin-top:20px">1 000 clients × 12 envois/an = 420 € économisés. Chaque année.</p>
   </div>
 </section>
 
@@ -378,52 +591,33 @@ footer{background:#000;border-top:1px solid var(--border);padding:64px 0 36px}
 <section class="bento-section" id="features">
   <div class="wrap">
     <div class="tc reveal">
-      <div class="tag" style="margin-bottom:18px">Fonctionnalités</div>
-      <h2 class="sec-title">Vos clients vous oublient ?<br>Plus jamais.</h2>
+      <div class="sec-label">Fonctionnalités</div>
+      <h2 class="sec-title">Tout ce qu'il faut<br>pour fidéliser.</h2>
     </div>
-    <div class="bento-grid">
-      <!-- Push — span 2 -->
-      <div class="bc s2 reveal">
+    <div class="bento">
+      <!-- Push span 2 -->
+      <div class="bc s2 glass reveal">
         <div class="bi g"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></div>
         <h3>Push notifications en 1 clic</h3>
         <p>Directement sur l'écran de verrouillage. Zéro euro, zéro intermédiaire.</p>
         <div class="bn-list">
-          <div class="bn-row"><div class="bn-ic"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke-width="2"/></svg></div><div class="bn-b"><div class="bn-t">Vous êtes à côté ? On vous attend.</div><div class="bn-s">Notification géolocalisée auto</div></div><span class="bn-chip cb">Géo</span></div>
+          <div class="bn-row"><div class="bn-ic"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg></div><div class="bn-b"><div class="bn-t">Vous êtes à côté ? On vous attend.</div><div class="bn-s">Géolocalisée automatiquement</div></div><span class="bn-chip cb">Géo</span></div>
           <div class="bn-row"><div class="bn-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg></div><div class="bn-b"><div class="bn-t">Bon anniversaire ! Cadeau offert.</div><div class="bn-s">Déclenchée automatiquement</div></div><span class="bn-chip cp">Anniv.</span></div>
           <div class="bn-row"><div class="bn-ic"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg></div><div class="bn-b"><div class="bn-t">Votre récompense expire bientôt !</div><div class="bn-s">Relance automatique</div></div><span class="bn-chip cg">Auto</span></div>
         </div>
       </div>
       <!-- ×2 -->
-      <div class="bc reveal d1">
+      <div class="bc glass reveal d1">
         <div class="bi"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg></div>
         <h3>×2 taux de retour</h3>
-        <p>Vos clients reviennent deux fois plus souvent dans les 3 premiers mois.</p>
+        <p>Vos clients reviennent deux fois plus souvent dès le premier mois.</p>
         <div class="stat-big"><div class="n"><em>×</em><span class="counter" data-target="2">0</span></div><div class="l">retour client moyen</div></div>
       </div>
-      <!-- Zero friction -->
-      <div class="bc reveal d2">
-        <div class="bi g"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01" stroke-width="3"/></svg></div>
-        <h3>Zéro friction</h3>
-        <p>Pas d'appli. Pas de compte. 2 clics dans le Wallet.</p>
-        <div class="phone-mock">
-          <div class="ph-st"><span>13:20</span><span>●●● ▲</span></div>
-          <div class="ph-sc">
-            <div class="ph-l">Wallet</div>
-            <div class="ph-card">
-              <div class="ph-ct"><span>Fidpass</span><span style="color:var(--green)">Fidélité</span></div>
-              <div class="ph-cn">Marie L.</div>
-              <div class="ph-dots"><div class="ph-dy"></div><div class="ph-dy"></div><div class="ph-dy"></div><div class="ph-dy"></div><div class="ph-dy"></div><div class="ph-dn"></div><div class="ph-dn"></div><div class="ph-dn"></div></div>
-              <div class="ph-pts">240 pts · 5/8 tampons</div>
-              <div class="ph-ok"><svg width="7" height="7" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="3"><polyline points="2,8 6,12 14,4"/></svg>Ajoutée</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Multi-site — dark span 2 -->
-      <div class="bc s2 dark reveal d1">
+      <!-- Multi-site -->
+      <div class="bc glass reveal d2">
         <div class="bi"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2M8 7V5a2 2 0 00-4 0v2"/></svg></div>
-        <h3>Multi-points de vente</h3>
-        <p>Un tableau de bord. Tous vos établissements.</p>
+        <h3>Multi-établissements</h3>
+        <p>Un tableau de bord. Tous vos points de vente.</p>
         <div class="ms-g">
           <div class="ms-b"><div class="ms-ci">Paris 11e</div><div class="ms-n">312</div><div class="ms-la">clients actifs</div></div>
           <div class="ms-b"><div class="ms-ci">Lyon Centre</div><div class="ms-n">204</div><div class="ms-la">clients actifs</div></div>
@@ -431,133 +625,28 @@ footer{background:#000;border-top:1px solid var(--border);padding:64px 0 36px}
           <div class="ms-add">＋</div>
         </div>
       </div>
-      <!-- Data -->
-      <div class="bc reveal">
-        <div class="bi g"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
-        <h3>Données clients auto</h3>
-        <p>Captées dès le premier passage.</p>
-        <div class="dc">
-          <div class="dc-h"><div class="dc-av"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div><div class="dc-nm">Marie Lambert</div><div class="dc-sb">Première visite il y a 3 mois</div></div></div>
-          <div class="dc-fs">
-            <div class="dc-f"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>marie@gmail.com</div>
-            <div class="dc-f"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/></svg>+33 6 12 34 56</div>
-            <div class="dc-f"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>Paris 11e</div>
-            <div class="dc-f"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>Née le 14 mars</div>
-          </div>
-          <div class="dc-sts">
-            <div class="dc-s"><div class="dc-sn">12</div><div class="dc-sl">Visites</div></div>
-            <div class="dc-s"><div class="dc-sn">240</div><div class="dc-sl">Points</div></div>
-            <div class="dc-s"><div class="dc-sn">6j</div><div class="dc-sl">Dernière visite</div></div>
-          </div>
-        </div>
-      </div>
-      <!-- Google — glow -->
-      <div class="bc glow reveal d2">
+      <!-- Google span 2 -->
+      <div class="bc s2 glass-green reveal">
         <div class="bi g"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <h3>Avis Google automatiques</h3>
-        <p>La Roulette Fidpass génère des 5 étoiles sans effort.</p>
+        <p>La Roulette Fidpass génère des 5 étoiles sans jamais demander.</p>
         <div class="gr">
           <div class="gr-big">4.9</div>
           <div><div class="gr-stars">★★★★★</div><div class="gr-lbl">+47 avis ce mois</div></div>
         </div>
         <div class="gr-badge"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Via Roulette Fidpass</div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- PUSH VS SMS -->
-<section style="background:var(--bg);padding:100px 0;position:relative;overflow:hidden">
-  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(34,197,94,.07),transparent 65%);pointer-events:none"></div>
-  <div class="wrap">
-    <div class="tc reveal" style="margin-bottom:56px">
-      <div class="tag tag-green" style="margin-bottom:18px"><span class="tag-dot"></span>Notifications push</div>
-      <h2 class="sec-title">Le bon message au bon moment,<br>sans effort — et sans frais.</h2>
-      <p style="font-size:18px;color:var(--dim);max-width:560px;margin:18px auto 0;line-height:1.7">Notifications push gratuites et illimitées — là où 200 SMS vous coûteraient 7 € à chaque envoi.</p>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:800px;margin:0 auto" class="reveal d1">
-      <!-- SMS -->
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:32px;text-align:center">
-        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:18px">SMS classique</div>
-        <div style="font-size:64px;font-weight:900;letter-spacing:-0.05em;color:rgba(255,255,255,.3);line-height:1">7<span style="font-size:32px">€</span></div>
-        <div style="font-size:13px;color:rgba(255,255,255,.2);margin-top:8px">pour 200 messages envoyés</div>
-        <div style="margin-top:24px;display:flex;flex-direction:column;gap:8px">
-          <div style="font-size:12px;color:rgba(255,255,255,.18);display:flex;align-items:center;gap:8px"><span style="color:rgba(255,100,100,.4)">✕</span>0,035 € / SMS</div>
-          <div style="font-size:12px;color:rgba(255,255,255,.18);display:flex;align-items:center;gap:8px"><span style="color:rgba(255,100,100,.4)">✕</span>Abonnement plateforme</div>
-          <div style="font-size:12px;color:rgba(255,255,255,.18);display:flex;align-items:center;gap:8px"><span style="color:rgba(255,100,100,.4)">✕</span>Coûts qui s'accumulent</div>
-        </div>
+      <!-- Data -->
+      <div class="bc glass reveal d1">
+        <div class="bi g"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <h3>Données clients auto</h3>
+        <p>Nom, email, téléphone, anniversaire — captés dès le premier passage. Vous êtes propriétaire de vos données.</p>
       </div>
-      <!-- Push Fidpass -->
-      <div style="background:rgba(34,197,94,.04);border:1px solid rgba(34,197,94,.22);border-radius:var(--r);padding:32px;text-align:center;position:relative">
-        <div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--green);color:#000;font-size:10px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;padding:4px 14px;border-radius:0 0 10px 10px">Fidpass</div>
-        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:18px;margin-top:12px">Push Wallet</div>
-        <div style="font-size:64px;font-weight:900;letter-spacing:-0.05em;color:var(--green);line-height:1">0<span style="font-size:32px">€</span></div>
-        <div style="font-size:13px;color:var(--muted);margin-top:8px">pour des envois illimités</div>
-        <div style="margin-top:24px;display:flex;flex-direction:column;gap:8px">
-          <div style="font-size:12px;color:var(--dim);display:flex;align-items:center;gap:8px"><span style="color:var(--green)">✓</span>Illimité, inclus dans le plan</div>
-          <div style="font-size:12px;color:var(--dim);display:flex;align-items:center;gap:8px"><span style="color:var(--green)">✓</span>Natif Apple & Google Wallet</div>
-          <div style="font-size:12px;color:var(--dim);display:flex;align-items:center;gap:8px"><span style="color:var(--green)">✓</span>Envoi en 1 clic, sans code</div>
-        </div>
-      </div>
-    </div>
-    <p class="reveal" style="text-align:center;font-size:13px;color:var(--muted);margin-top:20px">200 notifications × 12 mois = 84 € économisés. Avec 1 000 clients : plus de 400 €/an.</p>
-  </div>
-</section>
-
-<!-- WALLET -->
-<section style="background:var(--bg1);padding:100px 0">
-  <div class="wrap">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center" class="reveal">
-      <div>
-        <div class="tag" style="margin-bottom:18px">Apple Wallet · Google Wallet</div>
-        <h2 class="sec-title" style="margin-bottom:22px">Le client l'ajoute<br>à son Wallet —<br><span style="color:var(--green)">2 clics suffisent.</span></h2>
-        <p style="font-size:16px;color:var(--dim);line-height:1.8;margin-bottom:32px">Zéro appli à télécharger. Zéro compte à créer. La carte de fidélité vit dans l'application Wallet native de son iPhone ou Android — celle qu'il connaît déjà.</p>
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <div style="display:flex;align-items:flex-start;gap:14px">
-            <div style="width:36px;height:36px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);border-radius:10px;display:grid;place-items:center;flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <div><div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:3px">Pas d'appli, pas de compte</div><div style="font-size:13px;color:var(--muted);line-height:1.6">Native dans iOS et Android. Vos clients la connaissent déjà.</div></div>
-          </div>
-          <div style="display:flex;align-items:flex-start;gap:14px">
-            <div style="width:36px;height:36px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);border-radius:10px;display:grid;place-items:center;flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <div><div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:3px">Toujours visible, même sans internet</div><div style="font-size:13px;color:var(--muted);line-height:1.6">La carte apparaît sur l'écran de verrouillage quand le client est près de chez vous.</div></div>
-          </div>
-          <div style="display:flex;align-items:flex-start;gap:14px">
-            <div style="width:36px;height:36px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);border-radius:10px;display:grid;place-items:center;flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <div><div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:3px">Mise à jour en temps réel</div><div style="font-size:13px;color:var(--muted);line-height:1.6">Points, tampons, récompenses — la carte se met à jour instantanément.</div></div>
-          </div>
-        </div>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:18px" class="d2">
-        <!-- Wallet mockup -->
-        <div style="background:linear-gradient(145deg,#0d1a0d,#1a3320);border:1px solid rgba(34,197,94,.2);border-radius:22px;padding:28px;width:100%;max-width:320px;box-shadow:0 0 60px rgba(34,197,94,.1)">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-            <div><div style="font-size:11px;color:rgba(255,255,255,.35);margin-bottom:3px;text-transform:uppercase;letter-spacing:.07em">Carte de fidélité</div><div style="font-size:18px;font-weight:800;color:#fff">Le Comptoir</div></div>
-            <div style="width:44px;height:44px;background:var(--green2);border-radius:12px;display:grid;place-items:center"><svg width="20" height="20" viewBox="0 0 16 16" fill="#fff"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg></div>
-          </div>
-          <div style="display:flex;gap:7px;margin-bottom:18px">
-            <div style="width:34px;height:34px;border-radius:50%;background:var(--green);display:grid;place-items:center"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="3"><polyline points="2,8 6,12 14,4"/></svg></div>
-            <div style="width:34px;height:34px;border-radius:50%;background:var(--green);display:grid;place-items:center"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="3"><polyline points="2,8 6,12 14,4"/></svg></div>
-            <div style="width:34px;height:34px;border-radius:50%;background:var(--green);display:grid;place-items:center"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="3"><polyline points="2,8 6,12 14,4"/></svg></div>
-            <div style="width:34px;height:34px;border-radius:50%;background:var(--green);display:grid;place-items:center"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="3"><polyline points="2,8 6,12 14,4"/></svg></div>
-            <div style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12)"></div>
-            <div style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12)"></div>
-            <div style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12)"></div>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid rgba(255,255,255,.06)">
-            <div><div style="font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.06em">Membre</div><div style="font-size:14px;font-weight:700;color:#fff">Sophie M.</div></div>
-            <div style="text-align:right"><div style="font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.06em">Points</div><div style="font-size:22px;font-weight:900;color:var(--green)">240</div></div>
-          </div>
-        </div>
-        <div style="display:flex;gap:10px;align-items:center">
-          <div style="background:rgba(0,0,0,.8);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px 14px;display:flex;align-items:center;gap:7px">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8 2 4 6 4 10c0 6 8 12 8 12s8-6 8-12c0-4-4-8-8-8zm0 11a3 3 0 110-6 3 3 0 010 6z" fill="white" opacity=".9"/></svg>
-            <span style="font-size:12px;color:rgba(255,255,255,.6)">Apple Wallet</span>
-          </div>
-          <div style="background:rgba(0,0,0,.8);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px 14px;display:flex;align-items:center;gap:7px">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="white" opacity=".9"/><path d="M12 7v5l3 3" stroke="#000" stroke-width="2" stroke-linecap="round"/></svg>
-            <span style="font-size:12px;color:rgba(255,255,255,.6)">Google Wallet</span>
-          </div>
-        </div>
+      <!-- Setup -->
+      <div class="bc glass reveal d2">
+        <div class="bi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M20 12h-2M4 12H2m16.07 7.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 20v-2M12 4V2"/></svg></div>
+        <h3>Opérationnel en 24h</h3>
+        <p>On configure tout avec vous. Votre équipe peut utiliser Fidpass en 5 minutes.</p>
       </div>
     </div>
   </div>
@@ -568,30 +657,30 @@ footer{background:#000;border-top:1px solid var(--border);padding:64px 0 36px}
   <div class="wrap">
     <div class="roul-layout">
       <div class="reveal">
-        <div class="roul-label"><span class="new-badge">Nouveauté</span><span class="tag">Exclusivité Fidpass</span></div>
+        <div class="roul-badge"><span class="badge-new">Exclusif</span><div class="tag">Roulette Google Avis</div></div>
         <h2 class="roul-title">La Roulette<br><span class="acc">Google Avis</span></h2>
-        <p class="roul-desc">Lors de sa première carte, chaque nouveau client a droit à <strong style="color:var(--white)">1 spin unique</strong>. Il tente sa chance pour gagner un cadeau. Pour le réclamer, il laisse un avis Google. Une fois l'avis vérifié, la récompense est débloquée automatiquement.</p>
+        <p class="roul-desc">Chaque nouveau client a droit à <strong style="color:var(--white)">1 spin unique</strong> lors de la création de sa première carte. Il gagne un cadeau — et pour le réclamer, il laisse un avis Google. Automatique, vérifié, débloqué.</p>
         <div class="r-steps">
-          <div class="rstep"><div class="rsn">1</div><div><h4>Il scanne le QR et crée sa carte</h4><p>QR code affiché en caisse. La carte s'ajoute dans Apple ou Google Wallet en 2 clics.</p></div></div>
-          <div class="rstep"><div class="rsn">2</div><div><h4>1 spin offert — et 1 seul</h4><p>À la création de sa première carte. Il tourne la roue et découvre son gain : points, réduction, cadeau…</p></div></div>
-          <div class="rstep"><div class="rsn">3</div><div><h4>Pour réclamer : un avis Google</h4><p>Redirigé vers votre fiche Google. Il laisse l'avis en 30 secondes.</p></div></div>
-          <div class="rstep"><div class="rsn">4</div><div><h4>Avis vérifié → récompense débloquée</h4><p>Dès validation, ses points sont crédités. Automatique, zéro effort de votre côté.</p></div></div>
+          <div class="rstep"><div class="rsn">1</div><div><h4>Il scanne et crée sa carte Wallet</h4><p>QR code en caisse. 2 clics, c'est ajouté dans son téléphone.</p></div></div>
+          <div class="rstep"><div class="rsn">2</div><div><h4>1 spin offert — et 1 seul</h4><p>Il tourne la roue et découvre son gain : points, café, réduction…</p></div></div>
+          <div class="rstep"><div class="rsn">3</div><div><h4>Pour réclamer : un avis Google</h4><p>Redirigé vers votre fiche. 30 secondes.</p></div></div>
+          <div class="rstep"><div class="rsn">4</div><div><h4>Avis vérifié → récompense débloquée</h4><p>Ses points sont crédités. Vous avez un 5 étoiles de plus.</p></div></div>
         </div>
-        <a href="https://app.fidpass.fr/register" class="btn btn-primary btn-lg">Activer la Roulette →</a>
+        <a href="https://app.fidpass.fr" class="btn btn-p btn-lg">Activer la Roulette →</a>
       </div>
       <div class="wheel-side reveal d2">
         <div class="wheel-wrap">
           <div class="w-arrow"></div>
-          <canvas id="wcanvas" width="360" height="360"></canvas>
+          <canvas id="wcanvas"></canvas>
           <div class="w-hub" onclick="spinWheel()"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
         </div>
-        <button class="spin-btn" id="spinBtn" onclick="spinWheel()">🎰 Tourner la roue — 1 seule chance !</button>
-        <p id="spinUsed" style="display:none;font-size:12px;color:var(--muted);text-align:center">Démo uniquement — en réel, 1 spin par client à la création de sa carte.</p>
+        <button class="spin-btn" id="spinBtn" onclick="spinWheel()">Tourner la roue — 1 seule chance !</button>
+        <p id="spinNote">Démo uniquement — en réel, 1 spin par nouveau client à la création de sa carte.</p>
         <div class="wheel-result" id="wheelResult">
           <div class="wr-prize" id="prizeText"></div>
           <div class="wr-sub">Laissez un avis Google pour débloquer votre récompense</div>
           <button class="wr-btn" onclick="openModal()">
-            <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" width="17" height="17"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
             Laisser mon avis Google →
           </button>
         </div>
@@ -600,54 +689,50 @@ footer{background:#000;border-top:1px solid var(--border);padding:64px 0 36px}
   </div>
 </section>
 
-<!-- CALCULATOR -->
-<section class="calc-section" id="calculator">
+<!-- PRICING -->
+<section class="price-section" id="tarifs">
   <div class="wrap">
     <div class="tc reveal">
-      <div class="tag" style="margin-bottom:18px">Calculateur ROI</div>
-      <h2 class="sec-title">Combien vous perdez<br>chaque mois sans fidéliser ?</h2>
+      <div class="sec-label">Tarifs</div>
+      <h2 class="sec-title">Un seul plan.<br>Tout inclus.</h2>
     </div>
-    <div class="calc-grid reveal d1">
-      <div class="calc-l">
-        <div class="c-lbl">Clients par jour</div><div class="c-val" id="v-c">20</div><input type="range" id="r-c" min="5" max="300" value="20" oninput="calc()">
-        <div class="c-lbl">Jours ouverts / mois</div><div class="c-val" id="v-d">26 jours</div><input type="range" id="r-d" min="10" max="31" value="26" oninput="calc()">
-        <div class="c-lbl">Panier moyen (€)</div><div class="c-val" id="v-b">120 €</div><input type="range" id="r-b" min="5" max="500" value="120" oninput="calc()">
-        <div class="c-lbl">Points de vente</div><div class="c-val" id="v-s">1</div><input type="range" id="r-s" min="1" max="10" value="1" oninput="calc()" style="margin-bottom:0">
+    <div class="price-card glass-green reveal d1">
+      <div class="price-badge">Tout inclus</div>
+      <div class="price-amount"><em>79</em>,90<span style="font-size:40px;color:var(--dim)">€</span></div>
+      <div class="price-per">/ mois · Sans engagement · Résiliation à tout moment</div>
+      <div class="price-features">
+        <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Cartes Wallet illimitées</div>
+        <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Push notifications illimitées</div>
+        <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Roulette Google Avis</div>
+        <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Apple & Google Wallet</div>
+        <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Données clients export</div>
+        <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Multi-établissements</div>
+        <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Tableau de bord analytics</div>
+        <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Accompagnement 24h</div>
       </div>
-      <div class="calc-r">
-        <div>
-          <div class="tabs">
-            <button class="tab-btn" onclick="setTab('pessimiste',this)">Pessimiste</button>
-            <button class="tab-btn on" onclick="setTab('realiste',this)">Réaliste</button>
-            <button class="tab-btn" onclick="setTab('optimiste',this)">Optimiste</button>
-          </div>
-          <div class="c-note">Ventes annuelles supplémentaires estimées</div>
-          <div class="c-big" id="c-r">74 880 <em>€</em></div>
-          <div class="c-mo" id="c-mo">soit 6 240 € / mois</div>
-          <div class="c-pills"><span class="c-pill">× 2 rétention</span><span class="c-pill">+30% panier</span><span class="c-pill">Push gratuit</span><span class="c-pill">Avis Google auto</span></div>
-        </div>
-        <a href="https://app.fidpass.fr/register" class="btn btn-secondary" style="justify-content:center">Voir la démo →</a>
+      <div class="price-cta">
+        <a href="https://app.fidpass.fr" class="btn btn-p btn-lg" style="display:inline-flex">Commencer maintenant →</a>
       </div>
+      <div class="price-note">Essai 14 jours inclus · Sans carte bancaire · Opérationnel en 24h</div>
     </div>
-    <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:14px">Estimation basée sur les données de nos clients.</p>
   </div>
 </section>
 
-<!-- SOCIAL PROOF -->
+<!-- TESTIMONIALS -->
 <section class="proof-section" id="testimonials">
   <div class="wrap">
     <div class="tc reveal">
-      <div class="tag" style="margin-bottom:18px">Témoignages</div>
+      <div class="sec-label">Témoignages</div>
       <h2 class="sec-title">Ils l'utilisent au quotidien.</h2>
     </div>
     <div class="logos-row"><div class="lpill">LoftCoffee</div><div class="lpill">Boulangerie Artisan</div><div class="lpill">Salon Prestige</div><div class="lpill">Institut Zen</div><div class="lpill">Casa Roma</div><div class="lpill">La Boutique</div><div class="lpill">FitClub</div></div>
     <div class="rev-grid reveal d1">
-      <div class="rcard"><div class="rcard-stars">★★★★★</div><div class="rcard-text">"En 3 semaines, 140 cartes actives. Promo flash vendredi soir → +30% de CA le samedi. La roulette Google m'a ramené 34 avis en un mois."</div><div class="rcard-name">Karima B.</div><div class="rcard-role">Salon de coiffure — Lyon</div></div>
-      <div class="rcard"><div class="rcard-stars">★★★★★</div><div class="rcard-text">"Ce que j'aimais dans le papier c'était la simplicité. C'est encore plus simple maintenant — et j'ai les coordonnées de tous mes clients."</div><div class="rcard-name">Mehdi R.</div><div class="rcard-role">Restaurateur — Paris</div></div>
-      <div class="rcard"><div class="rcard-stars">★★★★★</div><div class="rcard-text">"L'interface est si simple que mon équipe l'a adoptée en 5 minutes. La roulette pour les avis est géniale — mes clients adorent jouer."</div><div class="rcard-name">Camille Bernard</div><div class="rcard-role">Maison Douce — Marseille</div></div>
-      <div class="rcard"><div class="rcard-stars">★★★★★</div><div class="rcard-text">"Cartes papier remplacées en une journée. Zéro coûts d'impression. Les clients adorent le digital et reviennent plus souvent."</div><div class="rcard-name">Thomas Lefèvre</div><div class="rcard-role">Boulangerie Le Fournil — Lyon</div></div>
-      <div class="rcard"><div class="rcard-stars">★★★★★</div><div class="rcard-text">"Les push ont doublé la fréquence de visites. On ne dépense plus un centime en pub Facebook."</div><div class="rcard-name">Antoine Girard</div><div class="rcard-role">Cave & Terroir — Toulouse</div></div>
-      <div class="rcard"><div class="rcard-stars">★★★★★</div><div class="rcard-text">"La roulette seule vaut l'investissement. On est passé de 3.8 à 4.9 étoiles sur Google en 6 semaines."</div><div class="rcard-name">Sophie Martin</div><div class="rcard-role">Institut Bellezza — Bordeaux</div></div>
+      <div class="rcard glass"><div class="rcard-stars">★★★★★</div><div class="rcard-text">"En 3 semaines, 140 cartes actives. Promo flash vendredi soir → +30% de CA le samedi. La roulette m'a ramené 34 avis Google en un mois."</div><div class="rcard-name">Karima B.</div><div class="rcard-role">Salon de coiffure — Lyon</div></div>
+      <div class="rcard glass"><div class="rcard-stars">★★★★★</div><div class="rcard-text">"Ce que j'aimais dans le papier c'était la simplicité. C'est encore plus simple maintenant — et j'ai les coordonnées de tous mes clients."</div><div class="rcard-name">Mehdi R.</div><div class="rcard-role">Restaurateur — Paris</div></div>
+      <div class="rcard glass"><div class="rcard-stars">★★★★★</div><div class="rcard-text">"L'interface est si simple que mon équipe l'a adoptée en 5 minutes. La roulette pour les avis est géniale — mes clients adorent jouer."</div><div class="rcard-name">Camille Bernard</div><div class="rcard-role">Maison Douce — Marseille</div></div>
+      <div class="rcard glass"><div class="rcard-stars">★★★★★</div><div class="rcard-text">"Cartes papier remplacées en une journée. Zéro coûts d'impression. Les clients adorent le digital et reviennent plus souvent."</div><div class="rcard-name">Thomas Lefèvre</div><div class="rcard-role">Boulangerie Le Fournil — Lyon</div></div>
+      <div class="rcard glass"><div class="rcard-stars">★★★★★</div><div class="rcard-text">"Les push ont doublé la fréquence de visites. On ne dépense plus un centime en pub Facebook."</div><div class="rcard-name">Antoine Girard</div><div class="rcard-role">Cave & Terroir — Toulouse</div></div>
+      <div class="rcard glass"><div class="rcard-stars">★★★★★</div><div class="rcard-text">"La roulette seule vaut l'investissement. On est passé de 3.8 à 4.9 étoiles sur Google en 6 semaines."</div><div class="rcard-name">Sophie Martin</div><div class="rcard-role">Institut Bellezza — Bordeaux</div></div>
     </div>
   </div>
 </section>
@@ -656,16 +741,16 @@ footer{background:#000;border-top:1px solid var(--border);padding:64px 0 36px}
 <section class="faq-section" id="faq">
   <div class="wrap">
     <div class="tc reveal">
-      <div class="tag" style="margin-bottom:18px">FAQ</div>
+      <div class="sec-label">FAQ</div>
       <h2 class="sec-title">Questions fréquentes</h2>
     </div>
     <div class="faq-list reveal d1">
-      <div class="faq-item"><div class="faq-q" onclick="faqT(this)"><span>Mes clients doivent-ils télécharger une application ?</span><div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">Non. La carte s'ajoute dans Apple Wallet ou Google Wallet en 2 clics, sans appli et sans compte. C'est natif dans leur téléphone.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="faqT(this)"><span>Comment fonctionne la Roulette Google Avis ?</span><div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">Vous affichez un QR code en caisse. Le client le scanne, tourne la roue, gagne un prix. Pour réclamer son gain, il laisse un avis sur votre fiche Google. Simple, automatique, efficace.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="faqT(this)"><span>Combien de temps pour lancer mon programme ?</span><div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">Moins de 24h. Un conseiller crée votre carte avec vous. Vos premiers clients peuvent l'ajouter dès le lendemain.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="faqT(this)"><span>Comment je récupère les coordonnées de mes clients ?</span><div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">Automatiquement. Nom, email, téléphone dans votre tableau de bord dès le premier passage.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="faqT(this)"><span>Combien ça coûte ?</span><div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">À partir de 49 €/mois. 14 jours d'essai gratuit, sans carte bancaire. Push illimités inclus dans tous les plans.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="faqT(this)"><span>Les push sont-ils vraiment gratuits et illimités ?</span><div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">Oui. Apple Wallet et Google Wallet envoient les notifications gratuitement. 200 SMS vous coûteraient 7 € — avec Fidpass c'est 0 €.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="faqT(this)"><span>Mes clients doivent-ils télécharger une application ?</span><div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">Non. La carte s'ajoute dans Apple Wallet ou Google Wallet en 2 clics — sans appli, sans compte. C'est natif dans leur téléphone.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="faqT(this)"><span>Comment fonctionne la Roulette Google Avis ?</span><div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">À la création de sa première carte, le client a droit à 1 spin unique. Il découvre son gain, puis doit laisser un avis Google pour le réclamer. Une fois l'avis vérifié, la récompense est débloquée automatiquement.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="faqT(this)"><span>Combien de temps pour lancer mon programme ?</span><div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">Moins de 24h. On configure votre carte avec vous. Vos clients peuvent l'ajouter dès le lendemain.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="faqT(this)"><span>Comment récupère-t-on les coordonnées des clients ?</span><div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">Automatiquement. Nom, email, téléphone et date de naissance dans votre tableau de bord dès le premier passage. Vous restez propriétaire de vos données.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="faqT(this)"><span>Quel est le prix de l'abonnement ?</span><div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">79,90 €/mois, tout inclus — push illimités, Roulette Avis, Wallet, multi-établissements, analytics. Essai 14 jours sans carte bancaire. Sans engagement, résiliation à tout moment.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="faqT(this)"><span>Les push sont-ils vraiment gratuits et illimités ?</span><div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">Oui. Apple Wallet et Google Wallet envoient les notifications sans frais supplémentaires. 200 SMS vous coûtent 7 € — avec Fidpass, c'est inclus dans votre abonnement.</div></div>
     </div>
     <p style="text-align:center;margin-top:28px;font-size:14px;color:var(--muted)">Autre question ? <a href="mailto:contact@fidpass.fr" style="color:var(--white);font-weight:700;text-decoration:underline;text-underline-offset:3px">Contactez-nous →</a></p>
   </div>
@@ -676,11 +761,13 @@ footer{background:#000;border-top:1px solid var(--border);padding:64px 0 36px}
   <div class="wrap">
     <div class="cta-box reveal">
       <div class="cta-glow"></div>
-      <div class="cta-eye">Fidpass · Commencez aujourd'hui</div>
-      <h2 class="cta-title">Chaque jour sans<br>fidélisation, c'est des<br>clients perdus.</h2>
-      <p class="cta-desc">La démo dure 20 minutes. Vous repartez avec votre carte configurée et vos premiers clients fidélisés dès le lendemain.</p>
-      <div class="cta-btns"><a href="https://app.fidpass.fr/register" class="btn btn-primary btn-lg">Réserver une démo gratuite →</a></div>
-      <p class="cta-note">Préférez un appel de 15 min ? <a href="mailto:contact@fidpass.fr">Choisir un créneau →</a></p>
+      <div class="tag tag-g" style="margin-bottom:24px"><span class="dot"></span>Fidpass · Commencez aujourd'hui</div>
+      <h2 class="cta-title">Chaque jour sans<br>fidélisation, c'est des<br><span class="grad">clients perdus.</span></h2>
+      <p class="cta-desc">Opérationnel en 24h. Votre carte configurée, vos premiers clients fidélisés dès le lendemain.</p>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px">
+        <a href="https://app.fidpass.fr" class="btn btn-p btn-lg">Se connecter →</a>
+      </div>
+      <p class="cta-note">Une question ? <a href="mailto:contact@fidpass.fr">contact@fidpass.fr</a></p>
     </div>
   </div>
 </section>
@@ -690,12 +777,12 @@ footer{background:#000;border-top:1px solid var(--border);padding:64px 0 36px}
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <a href="/" class="logo"><div class="logo-mark"><svg viewBox="0 0 16 16"><rect x="2" y="2" width="5" height="5" rx="1.2"/><rect x="9" y="2" width="5" height="5" rx="1.2"/><rect x="2" y="9" width="5" height="5" rx="1.2"/><rect x="9" y="9" width="5" height="5" rx="1.2"/></svg></div>Fidpass</a>
-        <p>La fidélité digitale pour votre commerce. Simple, efficace, sans appli.</p>
+        <a href="/" class="logo"><div class="logo-icon"><svg viewBox="0 0 16 16"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg></div>Fidpass</a>
+        <p>La carte de fidélité digitale qui fait revenir vos clients.</p>
         <div class="foot-soc"><a href="#">Instagram</a><a href="#">TikTok</a><a href="mailto:contact@fidpass.fr">Email</a></div>
       </div>
-      <div class="foot-col"><h4>Produit</h4><ul><li><a href="#features">Fonctionnalités</a></li><li><a href="#roulette">Roulette Avis</a></li><li><a href="#calculator">Calculateur ROI</a></li><li><a href="#faq">FAQ</a></li></ul></div>
-      <div class="foot-col"><h4>Solutions</h4><ul><li><a href="#">Restaurants</a></li><li><a href="#">Beauté & coiffure</a></li><li><a href="#">Boutiques</a></li><li><a href="#">Sport & bien-être</a></li></ul></div>
+      <div class="foot-col"><h4>Produit</h4><ul><li><a href="#how">Comment ça marche</a></li><li><a href="#features">Fonctionnalités</a></li><li><a href="#roulette">Roulette Avis</a></li><li><a href="#tarifs">Tarifs</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+      <div class="foot-col"><h4>Solutions</h4><ul><li><a href="#">Restaurants</a></li><li><a href="#">Beauté & coiffure</a></li><li><a href="#">Boulangeries</a></li><li><a href="#">Boutiques</a></li><li><a href="#">Bien-être</a></li></ul></div>
       <div class="foot-col"><h4>Agence</h4><ul><li><a href="#">À propos</a></li><li><a href="#">Témoignages</a></li><li><a href="#">Partenaires</a></li><li><a href="mailto:contact@fidpass.fr">Contact</a></li></ul></div>
       <div class="foot-col"><h4>Légal</h4><ul><li><a href="./mentions-legales.html">Mentions légales</a></li><li><a href="./confidentialite.html">Confidentialité</a></li><li><a href="./cgv.html">CGV</a></li></ul></div>
     </div>
@@ -703,15 +790,15 @@ footer{background:#000;border-top:1px solid var(--border);padding:64px 0 36px}
   </div>
 </footer>
 
-<!-- MODAL -->
+<!-- MODAL GOOGLE REVIEW -->
 <div class="modal-ov" id="modal" onclick="closeOuter(event)">
   <div class="modal-box">
     <div class="m-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
     <div class="m-prize" id="mPrize"></div>
-    <div class="m-sub">Ce gain vous attend — une seule étape.</div>
+    <div class="m-sub">Votre gain vous attend — une seule étape.</div>
     <hr class="m-sep">
     <div class="m-ask">Laissez un avis Google</div>
-    <div class="m-asksub">30 secondes. Une étoile de plus pour votre commerce. Récompense débloquée immédiatement.</div>
+    <div class="m-asksub">30 secondes. Votre récompense est débloquée dès validation.</div>
     <button class="m-gbtn" onclick="goReview()">
       <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
       Laisser mon avis Google →
@@ -722,24 +809,24 @@ footer{background:#000;border-top:1px solid var(--border);padding:64px 0 36px}
 
 <script>
 /* CURSOR LIGHT */
-const cl=document.getElementById('cursor-light');
+const cl=document.getElementById('clight');
 window.addEventListener('mousemove',e=>{cl.style.left=e.clientX+'px';cl.style.top=e.clientY+'px';cl.style.opacity='1'},{passive:true});
 
 /* BENTO MOUSE TRACK */
-document.querySelectorAll('.bc').forEach(c=>{
+document.querySelectorAll('.bc,.step-card').forEach(c=>{
   c.addEventListener('mousemove',e=>{
     const r=c.getBoundingClientRect();
     c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
     c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
-  });
+  },{passive:true});
 });
 
-/* NAV */
+/* NAV SCROLL */
 const np=document.getElementById('navPill');
-window.addEventListener('scroll',()=>np.classList.toggle('scrolled',scrollY>60),{passive:true});
+window.addEventListener('scroll',()=>np.classList.toggle('sc',scrollY>60),{passive:true});
 
 /* SCROLL REVEAL */
-const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('up')}),{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('up')}),{threshold:.07,rootMargin:'0px 0px -30px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
 /* COUNTERS */
@@ -752,80 +839,78 @@ function animCount(el){
 const co=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){animCount(e.target);co.unobserve(e.target);}}),{threshold:.5});
 document.querySelectorAll('.counter').forEach(el=>co.observe(el));
 
-/* CALCULATOR */
-let mode='realiste';
-const rates={pessimiste:.05,realiste:.13,optimiste:.25};
-function calc(){
-  const c=+document.getElementById('r-c').value,d=+document.getElementById('r-d').value,
-        b=+document.getElementById('r-b').value,s=+document.getElementById('r-s').value;
-  document.getElementById('v-c').textContent=c;
-  document.getElementById('v-d').textContent=d+' jours';
-  document.getElementById('v-b').textContent=b+' €';
-  document.getElementById('v-s').textContent=s;
-  const yr=c*d*b*s*12*rates[mode]*2;
-  document.getElementById('c-r').innerHTML=Math.round(yr).toLocaleString('fr-FR')+' <em>€</em>';
-  document.getElementById('c-mo').textContent='soit '+Math.round(yr/12).toLocaleString('fr-FR')+' € / mois';
-}
-function setTab(m,el){mode=m;document.querySelectorAll('.tab-btn').forEach(t=>t.classList.remove('on'));el.classList.add('on');calc();}
-calc();
-
 /* FAQ */
 function faqT(el){const i=el.parentElement,was=i.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(x=>x.classList.remove('open'));if(!was)i.classList.add('open');}
 
-/* WHEEL — 1 spin only per client (demo resets on page reload) */
-(function(){
-  // In production this would be server-side per card. Demo: localStorage.
-  // We purposely don't block the demo so visitors can try it.
-})();
+/* WHEEL — responsive canvas */
 const segs=[
-  {l:'50 pts',c:'#16a34a',t:'#fff'},
-  {l:'Café\noffert',c:'#0c0c0c',t:'#22c55e'},
-  {l:'100 pts',c:'#15803d',t:'#fff'},
-  {l:'Réduction\n10%',c:'#111',t:'#22c55e'},
-  {l:'200 pts',c:'#166534',t:'#fff'},
-  {l:'75 pts',c:'#0a0a0a',t:'#22c55e'},
-  {l:'JACKPOT\n500 pts',c:'#0d3320',t:'#4ade80'},
-  {l:'150 pts',c:'#161616',t:'#22c55e'},
+  {l:'50 pts',   c:'#14532d',t:'#fff'},
+  {l:'Café\noffert',c:'#052e16',t:'#4ade80'},
+  {l:'100 pts',  c:'#166534',t:'#fff'},
+  {l:'Réduction\n10%',c:'#0a0a0a',t:'#22c55e'},
+  {l:'200 pts',  c:'#15803d',t:'#fff'},
+  {l:'75 pts',   c:'#111',t:'#22c55e'},
+  {l:'JACKPOT\n500 pts',c:'#052e16',t:'#86efac'},
+  {l:'150 pts',  c:'#0d1a0d',t:'#4ade80'},
 ];
-const PI2=Math.PI*2,cvs=document.getElementById('wcanvas'),ctx=cvs.getContext('2d');
-const W=cvs.width,cx=W/2,cy=W/2,R=W/2-4;
-let ang=0,spinning=false,winIdx=-1;
+const PI2=Math.PI*2;
+const cvs=document.getElementById('wcanvas');
+const ctx=cvs.getContext('2d');
+let sz=0,ang=0,spinning=false,winIdx=-1,spun=false;
+
+function resize(){
+  const wrap=cvs.parentElement;
+  sz=wrap.getBoundingClientRect().width;
+  cvs.width=sz*devicePixelRatio;
+  cvs.height=sz*devicePixelRatio;
+  ctx.scale(devicePixelRatio,devicePixelRatio);
+  drawW(ang);
+}
+
 function drawW(a){
-  ctx.clearRect(0,0,W,W);
+  if(!sz)return;
+  ctx.save();
+  ctx.clearRect(0,0,sz,sz);
+  const cx=sz/2,cy=sz/2,R=sz/2-3;
   const arc=PI2/segs.length;
   segs.forEach((s,i)=>{
     const s1=a+i*arc,e1=s1+arc;
     ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,s1,e1);ctx.closePath();
     ctx.fillStyle=s.c;ctx.fill();
-    ctx.strokeStyle='rgba(255,255,255,.05)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=1;ctx.stroke();
     ctx.save();ctx.translate(cx,cy);ctx.rotate(s1+arc/2);ctx.textAlign='right';
+    const fs=Math.max(9,Math.min(13,sz*0.034));
     s.l.split('\n').forEach((ln,li,arr)=>{
-      ctx.fillStyle=s.t;ctx.font='bold 12px DM Sans,sans-serif';
-      ctx.fillText(ln,R-12,(li-(arr.length-1)/2)*16);
+      ctx.fillStyle=s.t;
+      ctx.font=`bold ${fs}px DM Sans,sans-serif`;
+      ctx.fillText(ln,R-10,(li-(arr.length-1)/2)*fs*1.35);
     });
     ctx.restore();
   });
-  ctx.beginPath();ctx.arc(cx,cy,R,0,PI2);ctx.strokeStyle='rgba(255,255,255,.06)';ctx.lineWidth=3;ctx.stroke();
+  ctx.beginPath();ctx.arc(sz/2,sz/2,R,0,PI2);ctx.strokeStyle='rgba(255,255,255,.07)';ctx.lineWidth=2;ctx.stroke();
+  ctx.restore();
 }
-drawW(0);
+
+window.addEventListener('resize',()=>{ctx.setTransform(1,0,0,1,0,0);resize();},{passive:true});
+resize();
+
 function spinWheel(){
   if(spinning)return;
   spinning=true;
-  document.getElementById('spinBtn').disabled=true;
+  const btn=document.getElementById('spinBtn');
+  btn.disabled=true;
   document.getElementById('wheelResult').classList.remove('show');
   const tot=(6+Math.floor(Math.random()*6))*PI2+Math.random()*PI2;
-  const dur=4400,t0=performance.now(),a0=ang;
+  const dur=4600,t0=performance.now(),a0=ang;
   const ease=t=>1-Math.pow(1-t,4.5);
   function f(now){
     const t=Math.min((now-t0)/dur,1);
     ang=a0+tot*ease(t);drawW(ang%PI2);
     if(t<1){requestAnimationFrame(f);}
     else{
-      spinning=false;
-      const btn=document.getElementById('spinBtn');
-      btn.disabled=true;
-      btn.textContent='1 spin utilisé — Déposez un avis pour débloquer !';
-      document.getElementById('spinUsed').style.display='block';
+      spinning=false;spun=true;
+      btn.textContent='1 spin utilisé ✓';
+      document.getElementById('spinNote').style.display='block';
       const arc=PI2/segs.length,norm=((-ang%PI2)+PI2)%PI2;
       winIdx=Math.floor(norm/arc)%segs.length;
       document.getElementById('prizeText').textContent=segs[winIdx].l.replace('\n',' ');
