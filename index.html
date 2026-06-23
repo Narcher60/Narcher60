@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fidpass — La fidélité digitale qui fait revenir vos clients</title>
+<meta name="description" content="Carte de fidélité digitale dans le téléphone de vos clients en 2 clics. Sans appli. Avec roulette Google Avis pour collecter des avis 5 étoiles automatiquement.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0a0a0a;
+  --black2:#111111;
+  --black3:#1a1a1a;
+  --black4:#242424;
+  --border-dark:rgba(255,255,255,.08);
+  --border-light:#e4e4e7;
+  --white:#ffffff;
+  --off-white:#f8f8f8;
+  --bg-light:#f4f4f5;
+  --text-light:#18181b;
+  --text-muted:#71717a;
+  --text-faint:#a1a1aa;
+  --green:#16a34a;
+  --green-light:#22c55e;
+  --green-bg:#dcfce7;
+  --green-text:#15803d;
+  --r:16px;
+  --r-sm:10px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--white);color:var(--text-light);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,h5{font-family:'Poppins',sans-serif}
+
+/* ── UTILS ── */
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+.btn-green{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;font-family:'Poppins',sans-serif;font-size:15px;font-weight:700;padding:14px 28px;border-radius:50px;text-decoration:none;border:none;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-green:hover{background:#15803d;transform:translateY(-1px);box-shadow:0 8px 24px rgba(22,163,74,.35)}
+.btn-dark{display:inline-flex;align-items:center;gap:8px;background:var(--black);color:#fff;font-family:'Poppins',sans-serif;font-size:15px;font-weight:700;padding:14px 28px;border-radius:50px;text-decoration:none;border:none;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-dark:hover{background:var(--black3);transform:translateY(-1px)}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--text-light);font-family:'Poppins',sans-serif;font-size:15px;font-weight:600;padding:14px 28px;border-radius:50px;text-decoration:none;border:1.5px solid var(--border-light);cursor:pointer;transition:all .2s}
+.btn-outline:hover{border-color:var(--text-muted);background:var(--bg-light)}
+.s-label{display:inline-block;font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 16px;border-radius:50px;margin-bottom:18px}
+.s-label-dark{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.1)}
+.s-label-light{background:var(--black);color:#fff}
+.s-label-green{background:var(--green-bg);color:var(--green-text);border:1px solid rgba(22,163,74,.2)}
+.s-title{font-size:clamp(28px,4.5vw,52px);font-weight:900;letter-spacing:-0.04em;line-height:1.06;color:var(--text-light)}
+.s-title-white{color:#fff}
+.s-desc{font-size:16px;color:var(--text-muted);line-height:1.75;max-width:520px}
+.tc{text-align:center}.tc .s-desc{margin:0 auto}
+section{padding:96px 0}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;transition:all .3s}
+nav.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-light);box-shadow:0 1px 20px rgba(0,0,0,.06)}
+.nav-wrap{max-width:1100px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font-family:'Poppins',sans-serif;font-size:18px;font-weight:800;letter-spacing:-0.04em;color:#fff;text-decoration:none;display:flex;align-items:center;gap:10px;transition:color .3s}
+nav.scrolled .logo{color:var(--black)}
+.logo-icon{width:32px;height:32px;background:var(--green);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-icon svg{width:16px;height:16px;fill:white}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.7);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
+nav.scrolled .nav-links a{color:var(--text-muted)}
+.nav-links a:hover{color:#fff}
+nav.scrolled .nav-links a:hover{color:var(--text-light)}
+.nav-cta-wrap{display:flex;align-items:center;gap:10px}
+.nav-ghost{color:rgba(255,255,255,.8);font-size:14px;font-weight:600;text-decoration:none;transition:color .2s}
+nav.scrolled .nav-ghost{color:var(--text-muted)}
+.nav-ghost:hover{color:#fff}
+nav.scrolled .nav-ghost:hover{color:var(--text-light)}
+@media(max-width:768px){.nav-links{display:none}.nav-ghost{display:none}}
+
+/* ── HERO ── */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;background:var(--black);position:relative;overflow:hidden;padding:100px 24px 80px}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.45}
+.orb-1{width:600px;height:600px;background:radial-gradient(circle,#16a34a,transparent 70%);top:-150px;right:-100px;animation:float1 12s ease-in-out infinite}
+.orb-2{width:400px;height:400px;background:radial-gradient(circle,#0d4f26,transparent 70%);bottom:-80px;left:-60px;animation:float2 15s ease-in-out infinite}
+.orb-3{width:300px;height:300px;background:radial-gradient(circle,#1a3a2a,transparent 70%);top:40%;left:30%;animation:float3 10s ease-in-out infinite}
+@keyframes float1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-30px,40px) scale(1.08)}}
+@keyframes float2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-30px) scale(1.05)}}
+@keyframes float3{0%,100%{transform:translate(0,0)}50%{transform:translate(-20px,20px)}}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at center,black 30%,transparent 80%)}
+.hero-inner{max-width:780px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:50px;padding:8px 18px;font-size:13px;color:rgba(255,255,255,.7);margin-bottom:28px;backdrop-filter:blur(10px)}
+.hero-pill-dot{width:7px;height:7px;background:var(--green-light);border-radius:50%;animation:blink 2s infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(34,197,94,.4)}50%{opacity:.5;box-shadow:0 0 0 6px rgba(34,197,94,0)}}
+.hero h1{font-size:clamp(38px,7vw,80px);font-weight:900;letter-spacing:-0.05em;line-height:1.0;margin-bottom:22px;color:#fff}
+.hero h1 .green{color:var(--green-light)}
+.hero-desc{font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.55);max-width:520px;margin:0 auto 36px;line-height:1.75}
+.hero-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:16px}
+.hero-note{font-size:13px;color:rgba(255,255,255,.35)}
+.hero-note a{color:rgba(255,255,255,.55);text-decoration:underline;text-underline-offset:3px}
+.hero-stats{display:flex;justify-content:center;gap:0;margin-top:64px;position:relative;z-index:1}
+.hero-stats-inner{display:inline-flex;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden;backdrop-filter:blur(12px)}
+.h-stat{padding:22px 40px;text-align:center;border-right:1px solid rgba(255,255,255,.08)}
+.h-stat:last-child{border-right:none}
+.h-stat-n{font-family:'Poppins',sans-serif;font-size:clamp(24px,3vw,36px);font-weight:900;color:#fff;letter-spacing:-0.04em}
+.h-stat-n .green{color:var(--green-light)}
+.h-stat-l{font-size:12px;color:rgba(255,255,255,.4);margin-top:2px}
+@media(max-width:600px){.h-stat{padding:18px 24px}}
+
+/* ── MARQUEE ── */
+.marquee-section{background:var(--black2);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);overflow:hidden;padding:0}
+.marquee-track{display:flex;width:max-content;animation:mscroll 35s linear infinite}
+.m-item{display:flex;align-items:center;gap:8px;padding:16px 28px;font-size:13px;font-weight:500;color:rgba(255,255,255,.35);white-space:nowrap}
+.m-dot{width:4px;height:4px;background:rgba(255,255,255,.15);border-radius:50%;margin:0 4px}
+@keyframes mscroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── HOW IT WORKS ── */
+.how-section{background:var(--black);color:#fff}
+.steps-grid{display:grid;gap:2px;margin-top:60px;border:1px solid rgba(255,255,255,.06);border-radius:20px;overflow:hidden}
+.step-row{display:grid;grid-template-columns:280px 1fr;background:rgba(255,255,255,.02);transition:background .2s}
+.step-row:hover{background:rgba(255,255,255,.04)}
+.step-row+.step-row{border-top:1px solid rgba(255,255,255,.06)}
+.step-left{padding:40px 36px;border-right:1px solid rgba(255,255,255,.06)}
+.step-num{font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-light);margin-bottom:14px}
+.step-left h3{font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:10px}
+.step-left p{font-size:14px;color:rgba(255,255,255,.45);line-height:1.7}
+.step-right{padding:32px 36px;display:flex;align-items:center}
+/* step mockups */
+.mock-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;width:100%;max-width:380px}
+.mock-header{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.mock-avatar{width:36px;height:36px;background:var(--green);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-size:12px;font-weight:800;color:#fff;flex-shrink:0}
+.mock-name{font-size:14px;font-weight:700;color:#fff}
+.mock-sub{font-size:11px;color:rgba(255,255,255,.35)}
+.mock-score{margin-left:auto;text-align:right}
+.mock-score-n{font-family:'Poppins',sans-serif;font-size:18px;font-weight:800;color:#fff}
+.mock-score-l{font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.06em}
+.dots-row{display:flex;gap:7px;margin-bottom:14px}
+.dot-on{width:30px;height:30px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center}
+.dot-on svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5}
+.dot-off{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)}
+.mock-footer{display:flex;justify-content:space-between;padding-top:12px;border-top:1px solid rgba(255,255,255,.06)}
+.mock-f-item{font-size:11px}
+.mock-f-label{color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.mock-f-val{font-size:13px;font-weight:700;color:rgba(255,255,255,.7)}
+/* wallet button */
+.wallet-btn{display:flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:none;width:100%;margin-top:10px;transition:all .2s}
+.wallet-apple{background:#fff;color:#000}
+.wallet-google{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.1);margin-top:8px}
+.wallet-apple:hover{background:#f0f0f0}
+.wallet-google:hover{background:rgba(255,255,255,.12)}
+/* contact card */
+.contact-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;width:100%;max-width:380px}
+.cc-head{padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.06)}
+.cc-av{width:38px;height:38px;background:rgba(255,255,255,.08);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.cc-fields{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.06)}
+.cc-field{background:var(--black2);padding:12px 14px;font-size:12px;color:rgba(255,255,255,.45);display:flex;align-items:center;gap:6px}
+.cc-field svg{opacity:.4}
+.cc-stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.06)}
+.cc-stat{padding:14px 8px;text-align:center;border-right:1px solid rgba(255,255,255,.06)}
+.cc-stat:last-child{border-right:none}
+.cc-stat-n{font-family:'Poppins',sans-serif;font-size:20px;font-weight:800;color:#fff}
+.cc-stat-l{font-size:10px;color:rgba(255,255,255,.3)}
+/* push notif */
+.push-notif{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;width:100%;max-width:380px}
+.push-icon{width:38px;height:38px;background:var(--green);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.push-title{font-size:13px;font-weight:700;color:#fff}
+.push-sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+.push-free{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;width:100%;max-width:380px}
+.push-free-l{font-size:12px;color:rgba(255,255,255,.4)}
+.push-free-r{font-size:14px;font-weight:800;color:var(--green-light)}
+@media(max-width:860px){.step-row{grid-template-columns:1fr}.step-left{border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}.step-right{justify-content:center}}
+
+/* ── FEATURES ── */
+.features-section{background:var(--off-white)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
+@media(max-width:900px){.feat-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:580px){.feat-grid{grid-template-columns:1fr}}
+.feat-card{background:#fff;border:1px solid var(--border-light);border-radius:var(--r);padding:28px;transition:all .2s;cursor:default}
+.feat-card:hover{border-color:var(--text-faint);box-shadow:0 8px 32px rgba(0,0,0,.07);transform:translateY(-2px)}
+.feat-card.dark{background:var(--black);border-color:transparent}
+.feat-card.dark:hover{box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.feat-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.feat-icon-light{background:var(--bg-light)}
+.feat-icon-dark{background:rgba(255,255,255,.08)}
+.feat-icon svg{width:22px;height:22px}
+.feat-card h3{font-size:17px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px}
+.feat-card-light h3{color:var(--text-light)}
+.feat-card.dark h3{color:#fff}
+.feat-card p{font-size:13px;line-height:1.7}
+.feat-card-light p{color:var(--text-muted)}
+.feat-card.dark p{color:rgba(255,255,255,.45)}
+.feat-card.span2{grid-column:span 2}
+@media(max-width:900px){.feat-card.span2{grid-column:span 1}}
+/* notif preview in feat */
+.feat-notif{background:var(--bg-light);border-radius:12px;padding:14px;margin-top:16px}
+.fn-row{display:flex;align-items:center;gap:10px;padding:8px;background:#fff;border-radius:8px;margin-bottom:6px;border:1px solid var(--border-light)}
+.fn-row:last-child{margin-bottom:0}
+.fn-ic{width:32px;height:32px;background:var(--black);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fn-ic svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2}
+.fn-text{font-size:12px;font-weight:600;color:var(--text-light);flex:1}
+.fn-chip{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap}
+.chip-geo{background:#dbeafe;color:#1d4ed8}
+.chip-auto{background:var(--green-bg);color:var(--green-text)}
+.chip-bday{background:#f3e8ff;color:#7e22ce}
+/* multisite */
+.ms-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.ms-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 12px}
+.ms-city{font-size:11px;font-weight:600;color:rgba(255,255,255,.5);margin-bottom:2px}
+.ms-num{font-family:'Poppins',sans-serif;font-size:22px;font-weight:900;color:#fff;letter-spacing:-0.03em}
+.ms-label{font-size:10px;color:rgba(255,255,255,.3)}
+.ms-add{display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.2);font-size:24px;border:1.5px dashed rgba(255,255,255,.1);border-radius:8px;padding:10px}
+
+/* ── ROULETTE SECTION ── */
+.roulette-section{background:var(--black);color:#fff;overflow:hidden;position:relative}
+.roulette-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(22,163,74,.12),transparent 70%)}
+.roulette-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1}
+@media(max-width:900px){.roulette-inner{grid-template-columns:1fr;gap:48px}}
+.roulette-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.roulette-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(22,163,74,.15);border:1px solid rgba(22,163,74,.25);color:var(--green-light);font-size:12px;font-weight:600;padding:5px 12px;border-radius:50px}
+.roulette-badge svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5}
+.roulette-title{font-size:clamp(30px,4vw,52px);font-weight:900;letter-spacing:-0.04em;line-height:1.05;margin-bottom:16px}
+.roulette-desc{font-size:15px;color:rgba(255,255,255,.5);line-height:1.75;margin-bottom:32px}
+.roulette-steps{display:flex;flex-direction:column;gap:14px;margin-bottom:36px}
+.rstep{display:flex;align-items:flex-start;gap:14px}
+.rstep-num{width:28px;height:28px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-size:11px;font-weight:800;color:#fff;flex-shrink:0;margin-top:1px}
+.rstep-text h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.rstep-text p{font-size:13px;color:rgba(255,255,255,.4);line-height:1.5}
+
+/* THE WHEEL */
+.wheel-container{display:flex;flex-direction:column;align-items:center;gap:24px}
+.wheel-wrap{position:relative;width:340px;height:340px;flex-shrink:0}
+@media(max-width:400px){.wheel-wrap{width:280px;height:280px}}
+.wheel-pointer{position:absolute;top:-16px;left:50%;transform:translateX(-50%);z-index:10;width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:28px solid var(--green-light);filter:drop-shadow(0 4px 8px rgba(34,197,94,.6))}
+#rouletteCanvas{border-radius:50%;box-shadow:0 0 0 4px rgba(255,255,255,.06),0 0 60px rgba(22,163,74,.2);display:block}
+.wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;background:var(--black);border-radius:50%;border:3px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;z-index:5}
+.wheel-center:hover{background:var(--black3);border-color:var(--green)}
+.wheel-center svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2}
+.spin-btn{background:var(--green);color:#fff;font-family:'Poppins',sans-serif;font-size:16px;font-weight:800;padding:16px 48px;border-radius:50px;border:none;cursor:pointer;transition:all .2s;letter-spacing:-0.01em}
+.spin-btn:hover:not(:disabled){background:#15803d;transform:translateY(-2px);box-shadow:0 8px 28px rgba(22,163,74,.4)}
+.spin-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.wheel-result{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:20px 28px;text-align:center;min-width:280px;display:none}
+.wheel-result.show{display:block}
+.wr-prize{font-family:'Poppins',sans-serif;font-size:28px;font-weight:900;color:var(--green-light);margin-bottom:6px}
+.wr-sub{font-size:14px;color:rgba(255,255,255,.5);margin-bottom:16px}
+.wr-cta{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--black);font-family:'Poppins',sans-serif;font-size:14px;font-weight:800;padding:12px 24px;border-radius:50px;text-decoration:none;cursor:pointer;transition:all .2s;border:none}
+.wr-cta:hover{background:#f0f0f0}
+.wr-cta svg{width:18px;height:18px}
+
+/* ── CALCULATOR ── */
+.calc-section{background:var(--off-white)}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:56px}
+@media(max-width:700px){.calc-grid{grid-template-columns:1fr}}
+.calc-light{background:#fff;border:1px solid var(--border-light);border-radius:var(--r);padding:36px}
+.calc-dark{background:var(--black);border-radius:var(--r);padding:36px;display:flex;flex-direction:column;justify-content:space-between}
+.c-label{font-size:13px;color:var(--text-muted);margin-bottom:4px}
+.c-val{font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--text-light);letter-spacing:-0.03em;margin-bottom:6px}
+input[type=range]{width:100%;height:3px;background:#e4e4e7;border-radius:2px;-webkit-appearance:none;outline:none;cursor:pointer;margin-bottom:24px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;background:var(--black);border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 1px var(--black)}
+.tabs-dark{display:flex;gap:8px;margin-bottom:24px}
+.tab-d{padding:8px 18px;border-radius:50px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);background:transparent;transition:all .2s}
+.tab-d.on{background:#fff;color:var(--black);border-color:#fff}
+.c-note{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:4px}
+.c-amount{font-family:'Poppins',sans-serif;font-size:clamp(48px,7vw,72px);font-weight:900;letter-spacing:-0.05em;color:#fff;line-height:1;margin-bottom:6px}
+.c-small{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:24px}
+.c-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:28px}
+.c-tag{font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;background:var(--green);color:#fff}
+
+/* ── TESTIMONIALS ── */
+.test-section{background:var(--white)}
+.logos-scroll{display:flex;gap:10px;overflow-x:auto;padding:8px 0 4px;scrollbar-width:none;margin:32px 0 48px}
+.logos-scroll::-webkit-scrollbar{display:none}
+.logo-pill{background:var(--off-white);border:1px solid var(--border-light);border-radius:50px;padding:8px 18px;font-size:13px;font-weight:600;white-space:nowrap;color:var(--text-muted)}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:860px){.reviews-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.reviews-grid{grid-template-columns:1fr}}
+.review-card{background:#fff;border:1px solid var(--border-light);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:14px;transition:all .2s;cursor:default}
+.review-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.07);transform:translateY(-2px);border-color:var(--text-faint)}
+.r-stars{color:#f59e0b;font-size:15px;letter-spacing:1px}
+.r-text{font-size:14px;color:var(--text-muted);line-height:1.75;flex:1}
+.r-name{font-size:14px;font-weight:700;color:var(--text-light)}
+.r-role{font-size:12px;color:var(--text-faint)}
+
+/* ── FORMATS ── */
+.formats-section{background:var(--off-white)}
+.formats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:56px}
+@media(max-width:900px){.formats-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.formats-grid{grid-template-columns:1fr 1fr}}
+.format-card{border-radius:var(--r);padding:26px;transition:transform .2s}
+.format-card:hover{transform:translateY(-3px)}
+.format-light{background:#fff;border:1px solid var(--border-light)}
+.format-dark{background:var(--black)}
+.f-ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.f-ic-light{background:var(--bg-light)}
+.f-ic-dark{background:rgba(255,255,255,.08)}
+.f-ic svg{width:22px;height:22px}
+.format-card h3{font-size:15px;font-weight:800;letter-spacing:-0.02em;margin-bottom:6px}
+.format-light h3{color:var(--text-light)}
+.format-dark h3{color:#fff}
+.format-card p{font-size:12px;line-height:1.65}
+.format-light p{color:var(--text-muted)}
+.format-dark p{color:rgba(255,255,255,.4)}
+
+/* ── FAQ ── */
+.faq-section{background:var(--white)}
+.faq-list{display:flex;flex-direction:column;gap:8px;max-width:720px;margin:56px auto 0}
+.faq-item{background:#fff;border:1px solid var(--border-light);border-radius:var(--r);overflow:hidden;transition:box-shadow .2s}
+.faq-item.open{box-shadow:0 4px 20px rgba(0,0,0,.07)}
+.faq-q{padding:20px 24px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:'Poppins',sans-serif;font-size:15px;font-weight:600;color:var(--text-light);gap:16px;user-select:none}
+.faq-q:hover{background:var(--off-white)}
+.faq-ic{width:28px;height:28px;background:var(--bg-light);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .25s}
+.faq-ic svg{width:14px;height:14px;stroke:var(--text-muted);fill:none;stroke-width:2.5;transition:transform .25s}
+.faq-item.open .faq-ic{background:var(--black)}
+.faq-item.open .faq-ic svg{stroke:#fff;transform:rotate(45deg)}
+.faq-a{font-size:14px;color:var(--text-muted);line-height:1.75;max-height:0;overflow:hidden;padding:0 24px;transition:max-height .35s ease,padding .35s ease}
+.faq-item.open .faq-a{max-height:400px;padding:0 24px 24px}
+
+/* ── CTA FINAL ── */
+.cta-section{background:var(--black);padding:96px 0}
+.cta-box{max-width:720px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(22,163,74,.15),transparent 70%);pointer-events:none}
+.cta-eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-light);margin-bottom:16px}
+.cta-title{font-size:clamp(32px,5vw,58px);font-weight:900;letter-spacing:-0.05em;color:#fff;margin-bottom:18px;line-height:1.05}
+.cta-desc{font-size:16px;color:rgba(255,255,255,.45);line-height:1.75;margin-bottom:36px;max-width:500px;margin-left:auto;margin-right:auto}
+.cta-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:16px}
+.cta-note{font-size:13px;color:rgba(255,255,255,.3)}
+.cta-note a{color:rgba(255,255,255,.5);text-decoration:underline;text-underline-offset:3px}
+
+/* ── FOOTER ── */
+footer{background:#000;border-top:1px solid rgba(255,255,255,.06);padding:60px 0 36px}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+@media(max-width:900px){.foot-grid{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:560px){.foot-grid{grid-template-columns:1fr 1fr}}
+.foot-brand p{font-size:13px;color:rgba(255,255,255,.3);margin:12px 0 18px;line-height:1.7;max-width:200px}
+.foot-socials{display:flex;gap:8px}
+.foot-socials a{font-size:12px;color:rgba(255,255,255,.4);text-decoration:none;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:6px 14px;transition:all .15s}
+.foot-socials a:hover{border-color:rgba(255,255,255,.2);color:#fff}
+.foot-col h4{font-size:11px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.foot-col a{font-size:13px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .15s}
+.foot-col a:hover{color:#fff}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.foot-bottom p,.foot-bottom a{font-size:12px;color:rgba(255,255,255,.2);text-decoration:none}
+.foot-bottom a:hover{color:rgba(255,255,255,.5)}
+.logo-dark{color:#fff}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{background:#111;border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:40px;max-width:440px;width:100%;text-align:center;transform:scale(.95);transition:transform .3s}
+.modal-overlay.open .modal-box{transform:scale(1)}
+.modal-prize{font-family:'Poppins',sans-serif;font-size:48px;font-weight:900;color:var(--green-light);letter-spacing:-0.04em;margin:16px 0 4px}
+.modal-subtitle{font-size:15px;color:rgba(255,255,255,.5);margin-bottom:28px}
+.modal-divider{border:none;border-top:1px solid rgba(255,255,255,.08);margin:24px 0}
+.modal-ask{font-family:'Poppins',sans-serif;font-size:17px;font-weight:800;color:#fff;margin-bottom:8px}
+.modal-ask-sub{font-size:14px;color:rgba(255,255,255,.4);margin-bottom:24px}
+.modal-google-btn{display:inline-flex;align-items:center;gap:10px;background:#fff;color:#000;font-family:'Poppins',sans-serif;font-size:15px;font-weight:800;padding:14px 28px;border-radius:50px;text-decoration:none;cursor:pointer;border:none;width:100%;justify-content:center;transition:all .2s;margin-bottom:10px}
+.modal-google-btn:hover{background:#f0f0f0;transform:translateY(-1px)}
+.modal-close{font-size:13px;color:rgba(255,255,255,.25);cursor:pointer;background:none;border:none;width:100%;padding:8px;text-align:center}
+.modal-close:hover{color:rgba(255,255,255,.5)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-wrap">
+    <a href="/" class="logo">
+      <div class="logo-icon"><svg viewBox="0 0 16 16"><rect x="2" y="2" width="5" height="5" rx="1.2"/><rect x="9" y="2" width="5" height="5" rx="1.2"/><rect x="2" y="9" width="5" height="5" rx="1.2"/><rect x="9" y="9" width="5" height="5" rx="1.2"/></svg></div>
+      Fidpass
+    </a>
+    <ul class="nav-links">
+      <li><a href="#how">Comment ça marche</a></li>
+      <li><a href="#roulette">Roulette Avis</a></li>
+      <li><a href="#features">Fonctionnalités</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-cta-wrap">
+      <a href="mailto:contact@fidpass.fr" class="nav-ghost">Nous contacter</a>
+      <a href="https://app.fidpass.fr/register" class="btn-green" style="font-size:13px;padding:10px 20px">Réserver une démo →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="hero-inner reveal">
+    <div class="hero-pill">
+      <span class="hero-pill-dot"></span>
+      Carte de fidélité dans le téléphone — zéro appli
+    </div>
+    <h1>Transformez chaque passage<br>en client <span class="green">fidèle</span></h1>
+    <p class="hero-desc">Vos clients ajoutent leur carte en 2 clics. Vous récupérez leurs coordonnées. Vous les relancez gratuitement. Ils reviennent.</p>
+    <div class="hero-btns">
+      <a href="https://app.fidpass.fr/register" class="btn-green" style="font-size:16px;padding:16px 32px">Réserver une démo gratuite →</a>
+      <a href="#how" class="btn-outline" style="color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.15)">Voir comment ça marche</a>
+    </div>
+    <p class="hero-note">Préférez un appel de 15 min ? <a href="mailto:contact@fidpass.fr">Choisir un créneau →</a></p>
+  </div>
+  <div class="hero-stats reveal reveal-delay-2" style="position:relative;z-index:1;margin-top:64px">
+    <div class="hero-stats-inner">
+      <div class="h-stat">
+        <div class="h-stat-n">+<span class="green">30%</span></div>
+        <div class="h-stat-l">CA supplémentaire</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-n"><span class="green">2×</span></div>
+        <div class="h-stat-l">Taux de retour client</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-n"><span class="green">0€</span></div>
+        <div class="h-stat-l">Push illimités</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-n"><span class="green">24h</span></div>
+        <div class="h-stat-l">Pour être opérationnel</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="m-item">Boulangeries<span class="m-dot"></span></div>
+    <div class="m-item">Restaurants<span class="m-dot"></span></div>
+    <div class="m-item">Salons de coiffure<span class="m-dot"></span></div>
+    <div class="m-item">Instituts beauté<span class="m-dot"></span></div>
+    <div class="m-item">Cafés<span class="m-dot"></span></div>
+    <div class="m-item">Boutiques mode<span class="m-dot"></span></div>
+    <div class="m-item">Salles de sport<span class="m-dot"></span></div>
+    <div class="m-item">Supermarchés<span class="m-dot"></span></div>
+    <div class="m-item">Toiletteurs<span class="m-dot"></span></div>
+    <div class="m-item">Bien-être & spa<span class="m-dot"></span></div>
+    <div class="m-item">Boulangeries<span class="m-dot"></span></div>
+    <div class="m-item">Restaurants<span class="m-dot"></span></div>
+    <div class="m-item">Salons de coiffure<span class="m-dot"></span></div>
+    <div class="m-item">Instituts beauté<span class="m-dot"></span></div>
+    <div class="m-item">Cafés<span class="m-dot"></span></div>
+    <div class="m-item">Boutiques mode<span class="m-dot"></span></div>
+    <div class="m-item">Salles de sport<span class="m-dot"></span></div>
+    <div class="m-item">Supermarchés<span class="m-dot"></span></div>
+    <div class="m-item">Toiletteurs<span class="m-dot"></span></div>
+    <div class="m-item">Bien-être & spa<span class="m-dot"></span></div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="wrap">
+    <div class="tc reveal">
+      <span class="s-label s-label-dark">Comment ça marche</span>
+      <h2 class="s-title s-title-white">Simple pour vous.<br>Simple pour eux.</h2>
+      <p class="s-desc" style="color:rgba(255,255,255,.45);margin:12px auto 0">4 étapes. Zéro compétence technique. Vos premiers clients fidélisés dès aujourd'hui.</p>
+    </div>
+    <div class="steps-grid reveal reveal-delay-1">
+      <!-- STEP 1 -->
+      <div class="step-row">
+        <div class="step-left">
+          <div class="step-num">Étape 01</div>
+          <h3>On crée votre carte avec vous</h3>
+          <p>Un conseiller dédié vous accompagne : logo, couleurs, récompenses. Votre carte est prête en 24h, sans aucune compétence technique.</p>
+        </div>
+        <div class="step-right">
+          <div class="mock-card">
+            <div class="mock-header">
+              <div class="mock-avatar">FP</div>
+              <div><div class="mock-name">Votre Commerce</div><div class="mock-sub">Carte de fidélité</div></div>
+              <div class="mock-score"><div class="mock-score-l">Tampons</div><div class="mock-score-n">5/8</div></div>
+            </div>
+            <div class="dots-row">
+              <div class="dot-on"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
+              <div class="dot-on"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
+              <div class="dot-on"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
+              <div class="dot-on"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
+              <div class="dot-on"><svg viewBox="0 0 16 16"><polyline points="3,8 6.5,11.5 13,5"/></svg></div>
+              <div class="dot-off"></div><div class="dot-off"></div><div class="dot-off"></div>
+            </div>
+            <div class="mock-footer">
+              <div class="mock-f-item"><div class="mock-f-label">Récompense</div><div class="mock-f-val">8e offert</div></div>
+              <div class="mock-f-item"><div class="mock-f-label">Membre</div><div class="mock-f-val">Sophie M.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- STEP 2 -->
+      <div class="step-row">
+        <div class="step-left">
+          <div class="step-num">Étape 02</div>
+          <h3>Le client l'ajoute en 2 clics</h3>
+          <p>Apple Wallet ou Google Wallet — sans télécharger d'appli, sans créer de compte. Toujours dans leur poche, jamais perdue.</p>
+        </div>
+        <div class="step-right">
+          <div style="width:100%;max-width:380px">
+            <button class="wallet-btn wallet-apple">
+              <svg width="16" height="20" viewBox="0 0 814 1000"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-42.3-150.3-109.2c-57.5-80.5-96.2-200.6-96.2-315.5 0-175.2 114.4-268.1 226.7-268.1 84.7 0 154.7 55.8 207.6 55.8 50.7 0 130.2-58.8 227.5-58.8zm-91.6-329c41.7-49.5 70.5-117.9 70.5-186.3 0-9.6-.6-19.2-2.6-27.5-66 2.6-145.3 44.3-192.6 100.4-36.5 42.3-71 110.7-71 180.4 0 10.3 1.9 20.6 2.6 23.9 4.5.6 11.6 1.9 18.7 1.9 59.5 0 135.2-39.8 174.4-92.8z" fill="black"/></svg>
+              Ajouter à Apple Wallet
+            </button>
+            <button class="wallet-btn wallet-google">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+              Ajouter à Google Wallet
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- STEP 3 -->
+      <div class="step-row">
+        <div class="step-left">
+          <div class="step-num">Étape 03</div>
+          <h3>Vous récupérez leurs coordonnées</h3>
+          <p>Nom, email, téléphone — captés automatiquement dès le premier passage. Votre base clients se construit seule.</p>
+        </div>
+        <div class="step-right">
+          <div class="contact-card">
+            <div class="cc-head">
+              <div class="cc-av">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              </div>
+              <div><div style="font-size:14px;font-weight:700;color:#fff">Marie Lambert</div><div style="font-size:11px;color:rgba(255,255,255,.35)">Première visite il y a 3 mois</div></div>
+            </div>
+            <div class="cc-fields">
+              <div class="cc-field"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>marie.l@gmail.com</div>
+              <div class="cc-field"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>+33 6 12 34 56 78</div>
+              <div class="cc-field"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Paris 11e</div>
+              <div class="cc-field"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Anniversaire : 14 mars</div>
+            </div>
+            <div class="cc-stats">
+              <div class="cc-stat"><div class="cc-stat-n">12</div><div class="cc-stat-l">Visites</div></div>
+              <div class="cc-stat"><div class="cc-stat-n">240</div><div class="cc-stat-l">Points</div></div>
+              <div class="cc-stat"><div class="cc-stat-n">6j</div><div class="cc-stat-l">Dernière visite</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- STEP 4 -->
+      <div class="step-row">
+        <div class="step-left">
+          <div class="step-num">Étape 04</div>
+          <h3>Relancez-les gratuitement</h3>
+          <p>Notifications push gratuites et illimitées directement sur leur écran. 200 SMS vous coûteraient 7€ — avec Fidpass, c'est zéro centime.</p>
+        </div>
+        <div class="step-right">
+          <div style="width:100%;max-width:380px">
+            <div class="push-notif">
+              <div class="push-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M20 12.01V11a8 8 0 10-16 0v1c0 4.4-1.7 6-2 6.3a1 1 0 00.7 1.7h18.6a1 1 0 00.7-1.7c-.3-.3-2-1.9-2-6.3z"/><path d="M10 21a2 2 0 004 0"/></svg></div>
+              <div><div class="push-title">Récompense débloquée !</div><div class="push-sub">Ton 8e café est offert. Montre-le en caisse.</div></div>
+            </div>
+            <div class="push-notif">
+              <div class="push-icon" style="background:rgba(255,255,255,.08)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <div><div class="push-title" style="color:rgba(255,255,255,.7)">On ne t'a pas vu depuis 2 semaines</div><div class="push-sub">Ta prochaine visite te rapproche d'une récompense.</div></div>
+            </div>
+            <div class="push-free">
+              <span class="push-free-l">Push illimités inclus</span>
+              <span class="push-free-r">0 € (SMS : 0,035 €/unité)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:48px" class="reveal">
+      <a href="https://app.fidpass.fr/register" class="btn-green" style="font-size:16px;padding:16px 36px">Mettre ça en place →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     ROULETTE GOOGLE AVIS — NEW FEATURE
+══════════════════════════════════════════ -->
+<section class="roulette-section" id="roulette">
+  <div class="wrap">
+    <div class="roulette-inner">
+      <!-- LEFT: COPY -->
+      <div class="reveal">
+        <div class="roulette-badges">
+          <span class="roulette-badge">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            Nouveauté exclusive
+          </span>
+          <span class="roulette-badge">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            30 secondes
+          </span>
+        </div>
+        <h2 class="roulette-title">La Roulette<br><span style="color:var(--green-light)">Google Avis</span></h2>
+        <p class="roulette-desc">Vos clients jouent pour gagner des points. En échange, ils laissent un avis Google. Vous collectez des 5 étoiles en automatique — sans jamais demander.</p>
+        <div class="roulette-steps">
+          <div class="rstep">
+            <div class="rstep-num">1</div>
+            <div class="rstep-text">
+              <h4>Le client scanne le QR code en caisse</h4>
+              <p>Affiché sur votre comptoir ou imprimé sur le ticket de caisse.</p>
+            </div>
+          </div>
+          <div class="rstep">
+            <div class="rstep-num">2</div>
+            <div class="rstep-text">
+              <h4>Il tourne la roue et gagne un prix</h4>
+              <p>Points bonus, réduction, café offert, article gratuit… You decide.</p>
+            </div>
+          </div>
+          <div class="rstep">
+            <div class="rstep-num">3</div>
+            <div class="rstep-text">
+              <h4>Pour réclamer son prix : un avis Google</h4>
+              <p>Le client est redirigé vers votre page Google. Vous recevez l'avis. Il reçoit ses points.</p>
+            </div>
+          </div>
+        </div>
+        <a href="https://app.fidpass.fr/register" class="btn-green" style="font-size:15px;padding:15px 32px">Activer la Roulette →</a>
+      </div>
+
+      <!-- RIGHT: THE WHEEL -->
+      <div class="wheel-container reveal reveal-delay-2">
+        <div class="wheel-wrap">
+          <div class="wheel-pointer"></div>
+          <canvas id="rouletteCanvas" width="340" height="340"></canvas>
+          <div class="wheel-center" onclick="spinWheel()">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+        </div>
+        <button class="spin-btn" id="spinBtn" onclick="spinWheel()">Tourner la roue !</button>
+        <div class="wheel-result" id="wheelResult">
+          <div class="wr-prize" id="prizeText"></div>
+          <div class="wr-sub">Pour récupérer votre gain, laissez un avis Google !</div>
+          <button class="wr-cta" onclick="openModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" fill="none"/></svg>
+            Laisser un avis Google →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div class="wrap">
+    <div class="tc reveal">
+      <span class="s-label s-label-light">Fonctionnalités</span>
+      <h2 class="s-title">Vos clients vous oublient ?<br>Plus jamais.</h2>
+      <p class="s-desc" style="margin:12px auto 0">Tout ce qu'il faut pour fidéliser, sans se compliquer la vie.</p>
+    </div>
+    <div class="feat-grid">
+      <!-- Push notifs -->
+      <div class="feat-card feat-card-light span2 reveal">
+        <div class="feat-icon feat-icon-light">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </div>
+        <h3>Push notifications en 1 clic</h3>
+        <p>Directement sur l'écran de verrouillage. Zéro euro. Zéro intermédiaire.</p>
+        <div class="feat-notif">
+          <div class="fn-row">
+            <div class="fn-ic"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke-width="2"/><circle cx="12" cy="9" r="2.5" stroke-width="2"/></svg></div>
+            <div class="fn-text">Vous êtes à côté ? On vous attend.</div>
+            <span class="fn-chip chip-geo">Géolocalisation</span>
+          </div>
+          <div class="fn-row">
+            <div class="fn-ic"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke-width="2"/><path d="M13.73 21a2 2 0 01-3.46 0" stroke-width="2"/></svg></div>
+            <div class="fn-text">Votre récompense expire bientôt !</div>
+            <span class="fn-chip chip-auto">Relance auto</span>
+          </div>
+          <div class="fn-row">
+            <div class="fn-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/><line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/></svg></div>
+            <div class="fn-text">Bon anniversaire ! Cadeau offert.</div>
+            <span class="fn-chip chip-bday">Anniversaire</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multi-site (dark) -->
+      <div class="feat-card dark feat-card-dark reveal reveal-delay-1">
+        <div class="feat-icon feat-icon-dark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+        </div>
+        <h3>Multi-points de vente</h3>
+        <p>Un tableau de bord pour piloter tous vos établissements depuis un seul endroit.</p>
+        <div class="ms-grid">
+          <div class="ms-box"><div class="ms-city">Paris 11e</div><div class="ms-num">312</div><div class="ms-label">clients actifs</div></div>
+          <div class="ms-box"><div class="ms-city">Lyon Centre</div><div class="ms-num">204</div><div class="ms-label">clients actifs</div></div>
+          <div class="ms-box"><div class="ms-city">Bordeaux</div><div class="ms-num">178</div><div class="ms-label">clients actifs</div></div>
+          <div class="ms-add">+</div>
+        </div>
+      </div>
+
+      <!-- Zero friction -->
+      <div class="feat-card feat-card-light reveal reveal-delay-2">
+        <div class="feat-icon feat-icon-light">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01" stroke-width="3"/></svg>
+        </div>
+        <h3>Zéro friction client</h3>
+        <p>Pas d'appli, pas de compte. La carte s'ajoute en 2 clics dans leur Wallet. Toujours disponible, même hors-ligne.</p>
+      </div>
+
+      <!-- Data -->
+      <div class="feat-card feat-card-light reveal">
+        <div class="feat-icon feat-icon-light">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>Vos données clients enfin</h3>
+        <p>Nom, email, téléphone captés automatiquement dès le premier passage. Plus jamais un client anonyme.</p>
+      </div>
+
+      <!-- Google reviews (dark) -->
+      <div class="feat-card dark feat-card-dark reveal reveal-delay-1" style="grid-column:span 2">
+        <div class="feat-icon feat-icon-dark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <h3>Avis Google en automatique</h3>
+        <p>La Roulette Fidpass transforme chaque client satisfait en ambassadeur. Ils jouent, ils gagnent des points — vous récupérez un avis 5 étoiles. Aucun effort.</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px 16px">
+          <div style="font-family:'Poppins',sans-serif;font-size:36px;font-weight:900;color:#fff;letter-spacing:-0.04em">4.9</div>
+          <div><div style="color:#f59e0b;font-size:16px;letter-spacing:2px">★★★★★</div><div style="font-size:12px;color:rgba(255,255,255,.35);margin-top:3px">+47 avis ce mois · Collecte auto</div></div>
+          <div style="margin-left:auto;background:var(--green);color:#fff;font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;padding:6px 14px;border-radius:50px">Via Roulette</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="calc-section" id="calculator">
+  <div class="wrap">
+    <div class="tc reveal">
+      <span class="s-label s-label-light">Calculateur ROI</span>
+      <h2 class="s-title">Combien vous laissez<br>sur la table chaque mois ?</h2>
+      <p class="s-desc" style="margin:12px auto 0">Déplacez les curseurs. Voyez en temps réel ce que la fidélisation peut vous rapporter.</p>
+    </div>
+    <div class="calc-grid reveal reveal-delay-1">
+      <div class="calc-light">
+        <div class="c-label">Clients par jour</div>
+        <div class="c-val" id="v-c">20</div>
+        <input type="range" id="r-c" min="5" max="300" value="20" oninput="calc()">
+        <div class="c-label">Jours ouverts / mois</div>
+        <div class="c-val" id="v-d">26 jours</div>
+        <input type="range" id="r-d" min="10" max="31" value="26" oninput="calc()">
+        <div class="c-label">Panier moyen (€)</div>
+        <div class="c-val" id="v-b">120 €</div>
+        <input type="range" id="r-b" min="5" max="500" value="120" oninput="calc()">
+        <div class="c-label">Points de vente</div>
+        <div class="c-val" id="v-s">1</div>
+        <input type="range" id="r-s" min="1" max="10" value="1" oninput="calc()" style="margin-bottom:0">
+      </div>
+      <div class="calc-dark">
+        <div>
+          <div class="tabs-dark">
+            <button class="tab-d" onclick="setTab('pessimiste',this)">Pessimiste</button>
+            <button class="tab-d on" onclick="setTab('realiste',this)">Réaliste</button>
+            <button class="tab-d" onclick="setTab('optimiste',this)">Optimiste</button>
+          </div>
+          <div class="c-note">Ventes annuelles supplémentaires estimées</div>
+          <div class="c-amount" id="c-r">74 880 €</div>
+          <div class="c-small" id="c-monthly">soit 6 240 € / mois</div>
+          <div class="c-tags">
+            <span class="c-tag">× 2 rétention client</span>
+            <span class="c-tag">+30% panier moyen</span>
+            <span class="c-tag">+Avis Google auto</span>
+          </div>
+        </div>
+        <a href="https://app.fidpass.fr/register" class="btn-outline" style="border-color:rgba(255,255,255,.15);color:#fff;justify-content:center">Je veux une démo gratuite →</a>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:12px;color:var(--text-faint);margin-top:12px">Estimation basée sur les données réelles de nos clients.</p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="test-section" id="testimonials">
+  <div class="wrap">
+    <div class="tc reveal">
+      <span class="s-label s-label-light">Témoignages</span>
+      <h2 class="s-title">Ils l'utilisent au quotidien</h2>
+      <p class="s-desc" style="margin:12px auto 0">Des dizaines de commerces, des résultats concrets. Leurs mots, pas les nôtres.</p>
+    </div>
+    <div class="logos-scroll">
+      <div class="logo-pill">LoftCoffee</div>
+      <div class="logo-pill">Boulangerie Artisan</div>
+      <div class="logo-pill">Salon Prestige</div>
+      <div class="logo-pill">Institut Zen</div>
+      <div class="logo-pill">Casa Roma</div>
+      <div class="logo-pill">La Boutique</div>
+      <div class="logo-pill">FitClub</div>
+    </div>
+    <div class="reviews-grid reveal">
+      <div class="review-card">
+        <div class="r-stars">★★★★★</div>
+        <div class="r-text">"En 3 semaines, j'avais 140 cartes actives. J'ai fait une promo flash un vendredi soir — le samedi, j'avais fait +30% de CA. La roulette Google m'a ramené 34 avis en un mois."</div>
+        <div><div class="r-name">Karima B.</div><div class="r-role">Gérante salon de coiffure — Lyon</div></div>
+      </div>
+      <div class="review-card">
+        <div class="r-stars">★★★★★</div>
+        <div class="r-text">"Ce que j'aimais dans le papier c'était la simplicité. Ça l'est encore plus maintenant — et en plus j'ai les coordonnées de tous mes clients. Ça change tout."</div>
+        <div><div class="r-name">Mehdi R.</div><div class="r-role">Restaurateur — Paris</div></div>
+      </div>
+      <div class="review-card">
+        <div class="r-stars">★★★★★</div>
+        <div class="r-text">"L'interface est tellement simple que même mon équipe la moins tech l'a adoptée en 5 minutes. La roulette pour les avis est géniale — nos clients adorent jouer."</div>
+        <div><div class="r-name">Camille Bernard</div><div class="r-role">Fondatrice Maison Douce — Marseille</div></div>
+      </div>
+      <div class="review-card">
+        <div class="r-stars">★★★★★</div>
+        <div class="r-text">"On a remplacé nos cartes papier en une journée. Nos clients adorent le côté digital et on a économisé sur les coûts d'impression. Le ROI est immédiat."</div>
+        <div><div class="r-name">Thomas Lefèvre</div><div class="r-role">Boulangerie Le Fournil — Lyon</div></div>
+      </div>
+      <div class="review-card">
+        <div class="r-stars">★★★★★</div>
+        <div class="r-text">"Depuis les notifications push, nos clients reviennent 2 fois plus souvent. Et on ne dépense plus un centime en pub Facebook."</div>
+        <div><div class="r-name">Antoine Girard</div><div class="r-role">Gérant Cave & Terroir — Toulouse</div></div>
+      </div>
+      <div class="review-card">
+        <div class="r-stars">★★★★★</div>
+        <div class="r-text">"Le programme anniversaire seul vaut l'investissement. Mes clientes se sentent reconnues. Et la roulette nous a permis de passer de 3.8 à 4.9 étoiles sur Google."</div>
+        <div><div class="r-name">Sophie Martin</div><div class="r-role">Institut Bellezza — Bordeaux</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATS -->
+<section class="formats-section" id="formats">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="s-label s-label-light">Formats</span>
+      <h2 class="s-title">8 formats, un seul objectif</h2>
+      <p class="s-desc" style="margin-top:12px">Tampons, cashback, parrainage ou VIP — choisissez ce qui fait revenir vos clients.</p>
+    </div>
+    <div class="formats-grid reveal reveal-delay-1">
+      <div class="format-card format-dark">
+        <div class="f-ic f-ic-dark"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2M8 7V5a2 2 0 00-4 0v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg></div>
+        <h3>Tampons</h3><p>10 cafés achetés, le 11ème offert. Le classique que vos clients adorent.</p>
+      </div>
+      <div class="format-card format-light">
+        <div class="f-ic f-ic-light"><svg viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <h3>Cashback</h3><p>Un % crédité sur leur cagnotte à chaque achat. Ils reviennent le dépenser.</p>
+      </div>
+      <div class="format-card format-light">
+        <div class="f-ic f-ic-light"><svg viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <h3>VIP / Tiering</h3><p>Des paliers exclusifs pour vos meilleurs clients.</p>
+      </div>
+      <div class="format-card format-dark">
+        <div class="f-ic f-ic-dark"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h6"/><path d="M12 17v-5M9.5 14.5l2.5 2.5 5-5"/></svg></div>
+        <h3>Cadeaux</h3><p>Anniversaires, occasions spéciales — surprenez-les avec des avantages directs.</p>
+      </div>
+      <div class="format-card format-dark">
+        <div class="f-ic f-ic-dark"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg></div>
+        <h3>Abonnements</h3><p>Gérez vos forfaits récurrents depuis le mobile de vos clients.</p>
+      </div>
+      <div class="format-card format-light">
+        <div class="f-ic f-ic-light"><svg viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <h3>Parrainage</h3><p>Chaque client satisfait devient un ambassadeur qui vous ramène du monde.</p>
+      </div>
+      <div class="format-card format-light">
+        <div class="f-ic f-ic-light"><svg viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2"><path d="M2 9a3 3 0 010-6h20a3 3 0 010 6"/><path d="M2 9v9a2 2 0 002 2h16a2 2 0 002-2V9"/><line x1="12" y1="3" x2="12" y2="21"/></svg></div>
+        <h3>Pass & Accès</h3><p>Événements, accès temporaires ou formules découverte — tout en un scan.</p>
+      </div>
+      <div class="format-card format-dark">
+        <div class="f-ic f-ic-dark"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <h3>Points Pro</h3><p>Un système de points multi-usages, adaptable à n'importe quel commerce.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="wrap">
+    <div class="tc reveal">
+      <span class="s-label s-label-light">FAQ</span>
+      <h2 class="s-title">Questions fréquentes</h2>
+    </div>
+    <div class="faq-list reveal reveal-delay-1">
+      <div class="faq-item"><div class="faq-q" onclick="faqToggle(this)">Mes clients doivent-ils télécharger une application ?<div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">Non. La carte s'ajoute directement dans Apple Wallet ou Google Wallet en 2 clics, sans télécharger d'application et sans créer de compte.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="faqToggle(this)">Comment fonctionne la Roulette Google Avis ?<div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">Vous affichez un QR code en caisse. Le client le scanne, tourne la roue et gagne un prix (points, réduction, cadeau). Pour réclamer son gain, il est redirigé vers votre fiche Google pour laisser un avis. Simple, automatique, efficace.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="faqToggle(this)">Combien de temps pour lancer mon programme ?<div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">Moins de 24h. On crée votre carte avec vous, on la configure, et vos premiers clients peuvent l'ajouter dès le lendemain.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="faqToggle(this)">Comment je récupère les coordonnées de mes clients ?<div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">Automatiquement ! Dès qu'un client ajoute sa carte, vous récupérez son nom, email et numéro de téléphone dans votre tableau de bord.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="faqToggle(this)">Combien ça coûte ?<div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">À partir de 49€/mois. 14 jours d'essai gratuit, sans carte bancaire. Les push notifications sont inclus et illimités dans tous les plans.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="faqToggle(this)">Les notifications push sont-elles vraiment gratuites ?<div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">Oui, les notifications via Apple Wallet et Google Wallet sont gratuites et illimitées. 200 SMS vous coûteraient 7€ — avec Fidpass, c'est 0€.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="faqToggle(this)">Est-ce que ça va vraiment faire revenir mes clients ?<div class="faq-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-a">Nos clients observent en moyenne +30% de retour client dans les 3 premiers mois. La combinaison notifications push + programme de points + roulette Google crée une habitude de visite.</div></div>
+    </div>
+    <p style="text-align:center;margin-top:28px;font-size:14px;color:var(--text-muted)">Une autre question ? <a href="mailto:contact@fidpass.fr" style="color:var(--text-light);font-weight:700;text-decoration:underline;text-underline-offset:3px">Contactez-nous →</a></p>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="wrap" style="position:relative;z-index:1">
+    <div class="cta-box reveal">
+      <div class="cta-eyebrow">Fidpass</div>
+      <h2 class="cta-title">Chaque jour sans fidélisation,<br>c'est des clients perdus.</h2>
+      <p class="cta-desc">La démo prend 20 minutes. Vous repartez avec votre carte configurée et vos premiers clients le lendemain.</p>
+      <div class="cta-btns">
+        <a href="https://app.fidpass.fr/register" class="btn-green" style="font-size:16px;padding:16px 36px">Réserver une démo gratuite →</a>
+      </div>
+      <p class="cta-note">Préférez un appel de 15 min ? <a href="mailto:contact@fidpass.fr">Choisir un créneau →</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="/" class="logo logo-dark">
+          <div class="logo-icon"><svg viewBox="0 0 16 16"><rect x="2" y="2" width="5" height="5" rx="1.2"/><rect x="9" y="2" width="5" height="5" rx="1.2"/><rect x="2" y="9" width="5" height="5" rx="1.2"/><rect x="9" y="9" width="5" height="5" rx="1.2"/></svg></div>
+          Fidpass
+        </a>
+        <p>La fidélité digitale pour votre commerce. Simple, efficace, sans appli.</p>
+        <div class="foot-socials">
+          <a href="#">Instagram</a><a href="#">TikTok</a><a href="mailto:contact@fidpass.fr">Email</a>
+        </div>
+      </div>
+      <div class="foot-col"><h4>Produit</h4><ul><li><a href="#features">Fonctionnalités</a></li><li><a href="#roulette">Roulette Avis</a></li><li><a href="#how">Comment ça marche</a></li><li><a href="#calculator">Calculateur ROI</a></li></ul></div>
+      <div class="foot-col"><h4>Solutions</h4><ul><li><a href="#">Restaurants</a></li><li><a href="#">Beauté & coiffure</a></li><li><a href="#">Boutiques</a></li><li><a href="#">Salles de sport</a></li></ul></div>
+      <div class="foot-col"><h4>Agence</h4><ul><li><a href="#">À propos</a></li><li><a href="#">Témoignages</a></li><li><a href="#">Partenaires</a></li><li><a href="mailto:contact@fidpass.fr">Contact</a></li></ul></div>
+      <div class="foot-col"><h4>Légal</h4><ul><li><a href="#">Mentions légales</a></li><li><a href="#">Confidentialité</a></li><li><a href="#">CGV</a></li><li><a href="#">Cookies</a></li></ul></div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2025 Fidpass · Pensé, conçu et opéré en France 🇫🇷</p>
+      <a href="mailto:contact@fidpass.fr">contact@fidpass.fr</a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <div style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:4px">Félicitations !</div>
+    <div class="modal-prize" id="modalPrize"></div>
+    <div class="modal-subtitle">Ce gain vous attend — il suffit d'une chose.</div>
+    <hr class="modal-divider">
+    <div class="modal-ask">Laissez un avis Google</div>
+    <div class="modal-ask-sub">Partagez votre expérience en 30 secondes et débloquez votre récompense immédiatement.</div>
+    <button class="modal-google-btn" onclick="goReview()">
+      <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      Laisser mon avis Google →
+    </button>
+    <button class="modal-close" onclick="closeModal()">Non merci, je renonce à ma récompense</button>
+  </div>
+</div>
+
+<script>
+/* ─── NAV SCROLL ─── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, {passive: true});
+
+/* ─── SCROLL REVEAL ─── */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
+}, {threshold: 0.1, rootMargin: '0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+/* ─── FAQ ─── */
+function faqToggle(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+/* ─── CALCULATOR ─── */
+let mode = 'realiste';
+const rates = {pessimiste: .05, realiste: .13, optimiste: .25};
+function calc() {
+  const c = +document.getElementById('r-c').value;
+  const d = +document.getElementById('r-d').value;
+  const b = +document.getElementById('r-b').value;
+  const s = +document.getElementById('r-s').value;
+  document.getElementById('v-c').textContent = c;
+  document.getElementById('v-d').textContent = d + ' jours';
+  document.getElementById('v-b').textContent = b + ' €';
+  document.getElementById('v-s').textContent = s;
+  const annual = c * d * b * s * 12 * rates[mode] * 2;
+  document.getElementById('c-r').textContent = Math.round(annual).toLocaleString('fr-FR') + ' €';
+  document.getElementById('c-monthly').textContent = 'soit ' + Math.round(annual/12).toLocaleString('fr-FR') + ' € / mois';
+}
+function setTab(m, el) {
+  mode = m;
+  document.querySelectorAll('.tab-d').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+  calc();
+}
+calc();
+
+/* ─── ROULETTE WHEEL ─── */
+const segments = [
+  { label: '50 pts', color: '#16a34a', text: '#fff' },
+  { label: 'Café offert', color: '#111', text: '#22c55e' },
+  { label: '100 pts', color: '#15803d', text: '#fff' },
+  { label: 'Réduction\n10%', color: '#1a1a1a', text: '#22c55e' },
+  { label: '200 pts', color: '#16a34a', text: '#fff' },
+  { label: '75 pts', color: '#222', text: '#22c55e' },
+  { label: '🎰 Jackpot\n500 pts', color: '#0d5a26', text: '#fff' },
+  { label: '150 pts', color: '#1e1e1e', text: '#22c55e' },
+];
+const TWO_PI = Math.PI * 2;
+const canvas = document.getElementById('rouletteCanvas');
+const ctx = canvas.getContext('2d');
+const size = canvas.width;
+const cx = size / 2, cy = size / 2, r = size / 2 - 4;
+let currentAngle = 0;
+let spinning = false;
+let winIdx = -1;
+
+function drawWheel(angle) {
+  ctx.clearRect(0, 0, size, size);
+  const arc = TWO_PI / segments.length;
+  segments.forEach((seg, i) => {
+    const start = angle + i * arc;
+    const end = start + arc;
+    // Segment
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, start, end);
+    ctx.closePath();
+    ctx.fillStyle = seg.color;
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,.08)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    // Text
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(start + arc / 2);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = seg.text;
+    ctx.font = 'bold 12px Poppins, sans-serif';
+    const lines = seg.label.split('\n');
+    lines.forEach((line, li) => {
+      ctx.fillText(line, r - 12, (li - (lines.length - 1) / 2) * 16);
+    });
+    ctx.restore();
+  });
+  // Outer ring
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, TWO_PI);
+  ctx.strokeStyle = 'rgba(255,255,255,.12)';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+}
+drawWheel(0);
+
+function spinWheel() {
+  if (spinning) return;
+  spinning = true;
+  document.getElementById('spinBtn').disabled = true;
+  document.getElementById('wheelResult').classList.remove('show');
+  const extra = Math.random() * TWO_PI;
+  const spins = (5 + Math.floor(Math.random() * 5)) * TWO_PI;
+  const total = spins + extra;
+  const duration = 4000;
+  const start = performance.now();
+  const startAngle = currentAngle;
+
+  function ease(t) { return 1 - Math.pow(1 - t, 4); }
+
+  function frame(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const e = ease(t);
+    currentAngle = startAngle + total * e;
+    drawWheel(currentAngle % TWO_PI);
+    if (t < 1) {
+      requestAnimationFrame(frame);
+    } else {
+      spinning = false;
+      document.getElementById('spinBtn').disabled = false;
+      document.getElementById('spinBtn').textContent = 'Retourner la roue';
+      // Determine winner: pointer at top (angle = -PI/2 from right = 3*PI/2)
+      const arc = TWO_PI / segments.length;
+      const norm = (((-currentAngle % TWO_PI) + TWO_PI) % TWO_PI);
+      winIdx = Math.floor(norm / arc) % segments.length;
+      const prize = segments[winIdx].label.replace('\n', ' ');
+      document.getElementById('prizeText').textContent = prize;
+      document.getElementById('wheelResult').classList.add('show');
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ─── MODAL ─── */
+function openModal() {
+  const prize = winIdx >= 0 ? segments[winIdx].label.replace('\n', ' ') : '';
+  document.getElementById('modalPrize').textContent = prize;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+function goReview() {
+  // Redirect to Google review page (merchant fills in real URL)
+  window.open('https://search.google.com/local/writereview?placeid=YOUR_PLACE_ID', '_blank');
+  closeModal();
+}
+</script>
+</body>
+</html>
